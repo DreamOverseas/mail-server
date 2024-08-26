@@ -5,7 +5,7 @@ const cors = require('cors');
 
 // Set port to 3001
 const app = express();
-const port = 3001;
+const port = 3002;
 
 // Middleware
 app.use(bodyParser.json());
@@ -69,9 +69,7 @@ app.post('/subscribe/360media-contact', async (req, res) => {
  */
 app.post('/subscribe/360media-quick', async (req, res) => {
     const {
-        email,
-        firstName,
-        lastName
+        email
     } = req.body;
 
     if (!email) {
@@ -84,10 +82,6 @@ app.post('/subscribe/360media-quick', async (req, res) => {
             {
                 email_address: email,
                 status: 'subscribed',
-                merge_fields: {
-                    FNAME: firstName,
-                    LNAME: lastName
-                },
                 tags: ["360media"]
             },
             {
