@@ -15,10 +15,27 @@ This Mailchimp Subscription Service allows users to subscribe to your mailing li
 ### Usage / API List
 
 #### 1. Submitting an Email to subscription
+Users can submit their email through the form on the frontend. The email, name and message(optional) to backend, then subscribe user to the audience.
+**Example HTTP Request**:
+```bash
+POST http://localhost:3001/subscribe/360media-contact 
+-H "Content-Type: application/json"
+-d '{
+  "email": "test@example.com",
+  "firstName": "Hanny",
+  "lastName": "Sama",
+  "message": "Looking forward to working with you!"
+}'
+```
+**Response**:
+- Success: `{"message":"Successfully subscribed"}`
+- Error: `{"error":"Some error message"}`
+
+#### 2. Submitting an Email to subscription
 Users can submit their email through the form on the frontend. The email will be sent to the backend, which processes the subscription request with Mailchimp.
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3001/subscribe -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
+POST http://localhost:3001/subscribe/360media-quick -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
 ```
 **Response**:
 - Success: `{"message":"Successfully subscribed"}`
@@ -37,4 +54,4 @@ curl -X POST http://localhost:3001/subscribe -H "Content-Type: application/json"
 
 ## Reference
 Author: Hanny Zhang \
-Last Edit: 14:59-AEST 18/07/2024
+Last Edit: 19:20-AEST 26/08/2024
