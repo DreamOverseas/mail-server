@@ -21,10 +21,9 @@ const serverPrefix = 'us21';
 const transporter = nodemailer.createTransport({
   host: 'smtp.exmail.qq.com', // SMTP server endpoint
   port: 465, // SMTP Port #（465 ? 587）
-  secure: true, // 465 -> true
   auth: {
     user: 'melbourne@do360.com',
-    pass: 'cDkrQ6tA4i9Ah5Wu',
+    pass: 'Qjcc4J73yEBrRfuS',
   },
 });
 
