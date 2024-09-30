@@ -20,13 +20,13 @@ const serverPrefix = 'us21';
 // Tencent Email SMTP settings
 const transporter = nodemailer.createTransport({
   host: 'smtp.exmail.qq.com', // SMTP server endpoint
-  port: 465, // SMTP Port #（465 ? 587）
+  port: 465,
   auth: {
     user: 'melbourne@do360.com',
     pass: 'Qjcc4J73yEBrRfuS',
   },
 });
-const manager_email = "xing142857@gmail.com";
+const manager_email = "zyhaierciyuan@gmail.com";
 
 
 /**
@@ -123,23 +123,40 @@ app.post('/missinternational/register-confirmation', (req, res) => {
   } = req.body;
 
   // Email Contents for new register
-  // const mailOptions = {
-  //   from: 'Miss International Melbourne <melbourne@do360.com>',
-  //   to: email,
-  //   subject: '报名提交确认 Comfirmation on Register',
-  //   text: `你好 ${name}, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！Any questions please email info@missinternational.world`,
-  //   html: `<p>你好 <b>${name}</b>, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！</p>
-  //         <p>Any questions please email info@missinternational.world</p>`,
-  // };
+  const mailOptions = {
+    from: 'Miss International Melbourne <melbourne@do360.com>',
+    to: email,
+    subject: 'Registeration Conformation: 环球小姐墨尔本2024',
+    html: `<p><b>${name}</b> 小姐 您好：</p>
+          <p>Hello, Miss <b>${name}</b>：</p>
+          <br />
+          <p>感谢您报名参加 第73届环球小姐中国大赛区澳洲分赛区- 墨尔本2024 ，我们已收到您的报名。我们的负责人Amy将会联系您，或者您也可通过下图中的联系方式主动联系Amy。</p>
+          <p>Thank you for registering for the 73rd Miss Universe China Pageant Australia - Melbourne 2024, we have received your application. You will be contacted by our manager Amy, or you can contact Amy via the contact form below.</p>
+          <br />
+          <p>感谢您的配合！</p>
+          <p>Thanks for your cooperation！</p>
+          <br />
+          <img src="cid:info@missinternational.world" alt="Amy Zhu: info@missinternational.world" />
+          <br />
+          <p>Best regards,</p>
+          <p>John Du | CEO</p>
+          `,
+    attachments: [
+      {
+        filename: 'AmyZhu.jpg',
+        path: './src/AmyZhu.jpg',
+        cid: 'info@missinternational.world',
+      },
+    ]
+  };
 
   // Email content for manager
   const mailOptions_manager = {
     from: 'Miss International Melbourne <melbourne@do360.com>',
     to: manager_email,
     subject: 'New Candidate Registered! 新佳丽报名了！',
-    text: "Good'ay, 有位新佳丽报名了, 请查看!",
-    html: `<p>Good'ay, 有位新佳丽报名了, 请即时查看哦!</p>`,
-  };
+    html: `<p>Good'ay, 有位新佳丽 <b>${name}</b> 报名了, 请即时查看哦!</p>`
+    };
 
   // Send them!
   transporter.sendMail(mailOptions, (error, info) => {
