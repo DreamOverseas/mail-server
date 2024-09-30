@@ -14,11 +14,11 @@ This Mailchimp Subscription Service allows users to subscribe to your mailing li
 
 ### Usage / API List
 
-#### 1. Submitting an Email to subscription
+#### 1. Submitting an Email to subscription [MailChimp]
 Users can submit their email through the form on the frontend. The email, name and message(optional) to backend, then subscribe user to the audience.
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3001/subscribe/360media-contact 
+POST http://localhost:3002/subscribe/360media-contact 
 -H "Content-Type: application/json"
 -d '{
   "email": "test@example.com",
@@ -31,18 +31,31 @@ POST http://localhost:3001/subscribe/360media-contact
 - Success: `{"message":"Successfully subscribed"}`
 - Error: `{"error":"Some error message"}`
 
-#### 2. Submitting an Email to subscription
+#### 2. Submitting an Email to subscription [MailChimp]
 Users can submit their email through the form on the frontend. The email will be sent to the backend, which processes the subscription request with Mailchimp.
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3001/subscribe/360media-quick -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
+POST http://localhost:3002/subscribe/360media-quick -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
 ```
 **Response**:
 - Success: `{"message":"Successfully subscribed"}`
 - Error: `{"error":"Some error message"}`
 
-#### 2. Coming Soon...
+#### 3. Comfirmation Email [Tencent SMTP]
+Users can submit their email through the form on the frontend. The email will be sent to the backend, which processes the subscription request with Mailchimp.
+**Example HTTP Request**:
+```bash
+POST http://localhost:3002/missinternational/register-confirmation 
+  -H "Content-Type: application/json" -d '{
+      "name" : "Banana McTester",
+      "email": "test@example.com"
+}'
+```
+**Response**:
+- Success: `{"message":"邮件发送成功"}`
+- Error: `{"error":"邮件发送失败"}`
 
+#### 4. Coming Soon...
 
 ### Testing the API
 You can test the API endpoint using tools like Postman or cURL.
