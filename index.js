@@ -123,14 +123,14 @@ app.post('/missinternational/register-confirmation', (req, res) => {
   } = req.body;
 
   // Email Contents for new register
-  const mailOptions = {
-    from: 'Miss International Melbourne <melbourne@do360.com>',
-    to: email,
-    subject: '报名提交确认 Comfirmation on Register',
-    text: `你好 ${name}, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！Any questions please email info@missinternational.world`,
-    html: `<p>你好 <b>${name}</b>, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！</p>
-          <p>Any questions please email info@missinternational.world</p>`,
-  };
+  // const mailOptions = {
+  //   from: 'Miss International Melbourne <melbourne@do360.com>',
+  //   to: email,
+  //   subject: '报名提交确认 Comfirmation on Register',
+  //   text: `你好 ${name}, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！Any questions please email info@missinternational.world`,
+  //   html: `<p>你好 <b>${name}</b>, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！</p>
+  //         <p>Any questions please email info@missinternational.world</p>`,
+  // };
 
   // Email content for manager
   const mailOptions_manager = {
