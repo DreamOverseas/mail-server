@@ -41,7 +41,7 @@ POST http://localhost:3002/subscribe/360media-quick -H "Content-Type: applicatio
 - Success: `{"message":"Successfully subscribed"}`
 - Error: `{"error":"Some error message"}`
 
-#### 3. Comfirmation Email [Tencent SMTP]
+#### 3. Comfirmation Email [Tencent_SMTP]
 After Submitting the register form and call this API, an email will be send to the miss and also a notifying email to manager.
 **Example HTTP Request**:
 ```bash
@@ -62,9 +62,9 @@ You can test the API endpoint using tools like Postman or cURL.
 
 **Example cURL Request**:
 ```bash
-curl -X POST http://localhost:3001/subscribe -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
+curl -X POST http://localhost:3002/subscribe -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
 ```
 
 ## Reference
 Author: Hanny Zhang \
-Last Edit: 19:20-AEST 26/08/2024
+Last Edit: 19:20-AEST 30/09/2024
