@@ -42,7 +42,7 @@ POST http://localhost:3002/subscribe/360media-quick -H "Content-Type: applicatio
 - Error: `{"error":"Some error message"}`
 
 #### 3. Comfirmation Email [Tencent SMTP]
-Users can submit their email through the form on the frontend. The email will be sent to the backend, which processes the subscription request with Mailchimp.
+After Submitting the register form and call this API, an email will be send to the miss and also a notifying email to manager.
 **Example HTTP Request**:
 ```bash
 POST http://localhost:3002/missinternational/register-confirmation 

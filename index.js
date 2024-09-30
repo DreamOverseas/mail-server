@@ -26,6 +26,7 @@ const transporter = nodemailer.createTransport({
     pass: 'Qjcc4J73yEBrRfuS',
   },
 });
+const manager_email = "xing142857@gmail.com";
 
 
 /**
@@ -113,6 +114,7 @@ app.post('/subscribe/360media-quick', async (req, res) => {
 
 /**
  * API handling notification emails on Miss-Registering form submit
+ * it will alkso send an email to notify the manager that new miss registered.
  */
 app.post('/missinternational/register-confirmation', (req, res) => {
   const { 
@@ -120,17 +122,36 @@ app.post('/missinternational/register-confirmation', (req, res) => {
     email 
   } = req.body;
 
-  // Email Contents
+  // Email Contents for new register
   const mailOptions = {
     from: 'Miss International Melbourne <melbourne@do360.com>',
     to: email,
     subject: '报名提交确认 Comfirmation on Register',
-    text: `你好 ${name}, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！`,
-    html: `<p>你好 <b>${name}</b>, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！</p>`,
+    text: `你好 ${name}, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！Any questions please email info@missinternational.world`,
+    html: `<p>你好 <b>${name}</b>, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！</p>
+          <p>Any questions please email info@missinternational.world</p>`,
   };
 
-  // Send it!
+  // Email content for manager
+  const mailOptions_manager = {
+    from: 'Miss International Melbourne <melbourne@do360.com>',
+    to: manager_email,
+    subject: 'New Candidate Registered! 新佳丽报名了！',
+    text: "Good'ay, 有位新佳丽报名了, 请查看!",
+    html: `<p>Good'ay, 有位新佳丽报名了, 请即时查看哦!</p>`,
+  };
+
+  // Send them!
   transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('邮件发送失败:', error);
+      return res.status(500).json({ error: '邮件发送失败' });
+    }
+    console.log('邮件发送成功:', info.response);
+    res.status(200).json({ message: '邮件发送成功' });
+  });
+
+  transporter.sendMail(mailOptions_manager, (error, info) => {
     if (error) {
       console.log('邮件发送失败:', error);
       return res.status(500).json({ error: '邮件发送失败' });
