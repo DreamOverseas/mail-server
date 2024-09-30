@@ -4,7 +4,9 @@ const nodemailer = require('nodemailer');
 const axios = require('axios');
 const cors = require('cors');
 
-// Set port to 3001
+require('dotenv').config();
+
+// Set port to 3002
 const app = express();
 const port = 3002;
 
@@ -13,8 +15,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Mailchimp secrets
-const mailchimpAPIKey = '7a942dd9dbffb981aa7f0fe0bae7cbaa';
-const audienceID = '712c2aeb4e';
+const mailchimpAPIKey = process.env.MC_API_KEY;
+const audienceID = process.env.MC_AUDIENCE_ID;
 const serverPrefix = 'us21';
 
 // Tencent Email SMTP settings
@@ -22,8 +24,8 @@ const transporter = nodemailer.createTransport({
   host: 'smtp.exmail.qq.com', // SMTP server endpoint
   port: 465,
   auth: {
-    user: 'melbourne@do360.com',
-    pass: 'Qjcc4J73yEBrRfuS',
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
 });
 const manager_email = "zyhaierciyuan@gmail.com";
