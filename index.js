@@ -28,7 +28,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS,
   },
 });
-const manager_email = "zyhaierciyuan@gmail.com";
+const manager_email = "xing142857@gmail.com";
 
 
 /**
