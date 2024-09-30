@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
 const axios = require('axios');
 const cors = require('cors');
 
@@ -15,6 +16,18 @@ app.use(cors());
 const mailchimpAPIKey = '7a942dd9dbffb981aa7f0fe0bae7cbaa';
 const audienceID = '712c2aeb4e';
 const serverPrefix = 'us21';
+
+// Tencent Email SMTP settings
+const transporter = nodemailer.createTransport({
+  host: 'smtp.exmail.qq.com', // SMTP server endpoint
+  port: 465, // SMTP Port #（465 ? 587）
+  secure: true, // 465 -> true
+  auth: {
+    user: 'melbourne@do360.com',
+    pass: 'cDkrQ6tA4i9Ah5Wu',
+  },
+});
+
 
 /**
  * API handling subscription for 360 Media website fron contact page
@@ -63,6 +76,7 @@ app.post('/subscribe/360media-contact', async (req, res) => {
     }
   });
 
+
 /**
  * API handling subscription for 360 Media website subscriptions
  * to start, run ``` node index.js ``` from root
@@ -97,9 +111,39 @@ app.post('/subscribe/360media-quick', async (req, res) => {
     }
 });
 
+
+/**
+ * API handling notification emails on Miss-Registering form submit
+ */
+app.post('/missinternational/register-confirmation', (req, res) => {
+  const { 
+    name, 
+    email 
+  } = req.body;
+
+  // Email Contents
+  const mailOptions = {
+    from: 'Miss International Melbourne <melbourne@do360.com>',
+    to: email,
+    subject: '报名提交确认 Comfirmation on Register',
+    text: `你好 ${name}, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！`,
+    html: `<p>你好 <b>${name}</b>, 我们收到了你的报名申请，感谢你提交表单！我们会火速处理各项信息，期待在比赛中赛见到你的身影！</p>`,
+  };
+
+  // Send it!
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('邮件发送失败:', error);
+      return res.status(500).json({ error: '邮件发送失败' });
+    }
+    console.log('邮件发送成功:', info.response);
+    res.status(200).json({ message: '邮件发送成功' });
+  });
+});
+
 // Up n Listen
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
-// ====== Written By Hanny, L.E.26/08/2024 ====== //
+// ====== Written By Hanny, L.E.30/09/2024 ====== //
