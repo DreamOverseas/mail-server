@@ -28,7 +28,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS,
   },
 });
-const manager_email = "xing142857@gmail.com";
+const manager_email = process.env.MISS_REG_MANAGER_EMAIL;
+const roseneath_cs = process.env.COSTOMER_SERVICE_ROSENEATH;
 
 
 /**
@@ -36,47 +37,47 @@ const manager_email = "xing142857@gmail.com";
  * to start, run ``` node index.js ``` from root
  */
 app.post('/subscribe/360media-contact', async (req, res) => {
-    const { email, firstName, lastName, message } = req.body;
-  
-    // Check if required data is provided
-    if (!email || !firstName || !lastName) {
-      return res.status(400).json({ error: 'Name and email is required' });
+  const { email, firstName, lastName, message } = req.body;
+
+  // Check if required data is provided
+  if (!email || !firstName || !lastName) {
+    return res.status(400).json({ error: 'Name and email is required' });
+  }
+
+  try {
+    // Mailchimp API URL
+    const url = `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceID}/members`;
+
+    // Payload for Mailchimp
+    const data = {
+      email_address: email,
+      status: 'subscribed',
+      merge_fields: {
+        FNAME: firstName,
+        LNAME: lastName,
+        MESSAGE: message,
+      },
+    };
+
+    // Send POST request to Mailchimp API
+    const response = await axios.post(url, data, {
+      headers: {
+        Authorization: `apikey ${mailchimpAPIKey}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // Check if the response was successful
+    if (response.status === 200) {
+      res.status(200).json({ message: 'Successfully subscribed' });
+    } else {
+      res.status(response.status).json({ error: 'Failed to subscribe' });
     }
-  
-    try {
-      // Mailchimp API URL
-      const url = `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceID}/members`;
-  
-      // Payload for Mailchimp
-      const data = {
-        email_address: email,
-        status: 'subscribed',
-        merge_fields: {
-          FNAME: firstName,
-          LNAME: lastName,
-          MESSAGE: message,
-        },
-      };
-  
-      // Send POST request to Mailchimp API
-      const response = await axios.post(url, data, {
-        headers: {
-          Authorization: `apikey ${mailchimpAPIKey}`,
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      // Check if the response was successful
-      if (response.status === 200) {
-        res.status(200).json({ message: 'Successfully subscribed' });
-      } else {
-        res.status(response.status).json({ error: 'Failed to subscribe' });
-      }
-    } catch (error) {
-      // Handle any errors that occur during the request
-      res.status(500).json({ error: 'An error occurred', details: error.message });
-    }
-  });
+  } catch (error) {
+    // Handle any errors that occur during the request
+    res.status(500).json({ error: 'An error occurred', details: error.message });
+  }
+});
 
 
 /**
@@ -84,33 +85,33 @@ app.post('/subscribe/360media-contact', async (req, res) => {
  * to start, run ``` node index.js ``` from root
  */
 app.post('/subscribe/360media-quick', async (req, res) => {
-    const {
-        email
-    } = req.body;
+  const {
+    email
+  } = req.body;
 
-    if (!email) {
-        return res.status(400).json({ error: 'Email is required' });
-    }
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required' });
+  }
 
-    try {
-        const response = await axios.post(
-            `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceID}/members`,
-            {
-                email_address: email,
-                status: 'subscribed',
-                tags: ["360media"]
-            },
-            {
-                headers: {
-                    Authorization: `apikey ${mailchimpAPIKey}`,
-                },
-            }
-        );
+  try {
+    const response = await axios.post(
+      `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceID}/members`,
+      {
+        email_address: email,
+        status: 'subscribed',
+        tags: ["360media"]
+      },
+      {
+        headers: {
+          Authorization: `apikey ${mailchimpAPIKey}`,
+        },
+      }
+    );
 
-        res.status(200).json({ message: 'Successfully subscribed' });
-    } catch (error) {
-        res.status(500).json({ error: error.response.data.title });
-    }
+    res.status(200).json({ message: 'Successfully subscribed' });
+  } catch (error) {
+    res.status(500).json({ error: error.response.data.title });
+  }
 });
 
 
@@ -119,9 +120,9 @@ app.post('/subscribe/360media-quick', async (req, res) => {
  * it will alkso send an email to notify the manager that new miss registered.
  */
 app.post('/missinternational/register-confirmation', (req, res) => {
-  const { 
-    name, 
-    email 
+  const {
+    name,
+    email
   } = req.body;
 
   // Email Contents for new register
@@ -158,7 +159,7 @@ app.post('/missinternational/register-confirmation', (req, res) => {
     to: manager_email,
     subject: 'New Candidate Registered! 新佳丽报名了！',
     html: `<p>Good'ay, 有位新佳丽 <b>${name}</b> 报名了, 请即时查看哦!</p>`
-    };
+  };
 
   // Send them!
   transporter.sendMail(mailOptions, (error, info) => {
@@ -180,9 +181,47 @@ app.post('/missinternational/register-confirmation', (req, res) => {
   });
 });
 
-// Up n Listen
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+/**
+ * API handling Contact enquiries from roseneath park website
+*/
+app.post('/roseneathpark/contact', (req, res) => {
+  const { Name, PhoneNumber, Email, Company, Subject, Question } = req.body;
+
+  // Check for required fields
+  if (!Name || !Email || !Subject || !Question) {
+    return res.status(400).json({ error: 'Name, Email, Subject, and Question are required fields.' });
+  }
+
+  // Define email content
+  const mailOptions = {
+    from: 'Roseneath Park Website <melbourne@do360.com>',
+    to: roseneath_cs,
+    subject: `Question on '${Subject}' from ${Name}`,
+    text: `Hi there,
+
+You got a new enquiry from Roseneath Park Website:
+${Question}
+
+From: ${Name}
+Email: ${Email}
+Phone Number: ${PhoneNumber || 'Not provided'}
+Company: ${Company || 'Not provided'}`,
+  };
+
+  // Send email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      return res.status(500).json({ error: 'Failed to send email.' });
+    }
+    console.log('Email sent successfully:', info.response);
+    res.status(200).json({ message: 'Enquiry sent successfully!' });
+  });
 });
 
-// ====== Written By Hanny, L.E.30/09/2024 ====== //
+// Up n Listen
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
+// ====== Written By Hanny, L.E.29/10/2024 ====== //
