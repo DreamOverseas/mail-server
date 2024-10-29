@@ -1,11 +1,7 @@
-Sure, here's a brief documentation in Markdown format for your Mailchimp subscription service.
-
-# Mailchimp Subscription Service
+# Mail Service APIs for Projects under S+/DOG
 
 ## Introduction
-This Mailchimp Subscription Service allows users to subscribe to your mailing list by entering their email addresses and other mail-related operations. The service uses a Node.js/Express backend to securely communicate with the Mailchimp API, ensuring that API keys and other sensitive information are not exposed on the client side.
-
-## Setup and Deployment
+This Service API Collection allows users to achieve a series of email-related operations. The service uses a Node.js/Express backend to securely communicate with the Mailchimp API and Tencent Enterprise Email's SMTP service, ensuring that API keys and other sensitive information are not exposed on the client side.
 
 ### Prerequisites
 - Node.js and npm installed on your server
@@ -55,7 +51,24 @@ POST http://localhost:3002/missinternational/register-confirmation
 - Success: `{"message":"邮件发送成功"}`
 - Error: `{"error":"邮件发送失败"}`
 
-#### 4. Coming Soon...
+#### 4. Roseneath Park Enquiry Email [Tencent_SMTP]
+After Submitting the contact us form and call this API, an email will be send to the Costomer service email address in .env with questions
+**Example HTTP Request**:
+```bash
+POST http://localhost:3002/roseneathpark/contact/
+  -H "Content-Type: application/json" -d '{
+  "Name": "John",
+  "PhoneNumber": "+61 123 456 789",
+  "Email": "john@example.com",
+  "Company": "Roseneath Park",
+  "Subject": "Booking Inquiry",
+  "Question": "I'd like to inquire about availability and rates."
+}'
+```
+**Response**:
+As usual, 200 for OK and meh otherwise...
+
+#### 5. Coming Soon...
 
 ### Testing the API
 You can test the API endpoint using tools like Postman or cURL.
@@ -67,4 +80,4 @@ curl -X POST http://localhost:3002/subscribe -H "Content-Type: application/json"
 
 ## Reference
 Author: Hanny Zhang \
-Last Edit: 19:20-AEST 30/09/2024
+Last Edit: 15:28-AEDT 29/10/2024
