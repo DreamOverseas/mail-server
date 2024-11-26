@@ -27,17 +27,19 @@ POST http://localhost:3002/subscribe/360media-contact
 - Success: `{"message":"Successfully subscribed"}`
 - Error: `{"error":"Some error message"}`
 
-#### 2. Submitting an Email to subscription [MailChimp]
+#### 2/3. Quickly Submitting an Email to subscription [MailChimp]
 Users can submit their email through the form on the frontend. The email will be sent to the backend, which processes the subscription request with Mailchimp.
 **Example HTTP Request**:
 ```bash
 POST http://localhost:3002/subscribe/360media-quick -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
+POST http://localhost:3002/subscribe/chateau-le-marais-quick -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
 ```
 **Response**:
 - Success: `{"message":"Successfully subscribed"}`
 - Error: `{"error":"Some error message"}`
+> Note: These will mightly be merged if more platforms are coming up
 
-#### 3. Comfirmation Email [Tencent_SMTP]
+#### 4. Comfirmation Email [Tencent_SMTP]
 After Submitting the register form and call this API, an email will be send to the miss and also a notifying email to manager.
 **Example HTTP Request**:
 ```bash
@@ -51,7 +53,7 @@ POST http://localhost:3002/missinternational/register-confirmation
 - Success: `{"message":"邮件发送成功"}`
 - Error: `{"error":"邮件发送失败"}`
 
-#### 4. Roseneath Park Enquiry Email [Tencent_SMTP]
+#### 5. Roseneath Park Enquiry Email [Tencent_SMTP]
 After Submitting the contact us form and call this API, an email will be send to the Costomer service email address in .env with questions
 **Example HTTP Request**:
 ```bash
@@ -68,7 +70,7 @@ POST http://localhost:3002/roseneathpark/contact/
 **Response**:
 As usual, 200 for OK and meh otherwise...
 
-#### 5. Coming Soon...
+#### 6. Coming Soon...
 
 ### Testing the API
 You can test the API endpoint using tools like Postman or cURL.
