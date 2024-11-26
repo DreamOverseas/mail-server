@@ -116,6 +116,41 @@ app.post('/subscribe/360media-quick', async (req, res) => {
 
 
 /**
+ * API handling subscription for Chateau Le Marais website subscriptions
+ * Same function as Media 360 one, but have different tag
+ */
+app.post('/subscribe/chateau-le-marais-quick', async (req, res) => {
+  const {
+    email
+  } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required' });
+  }
+
+  try {
+    const response = await axios.post(
+      `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceID}/members`,
+      {
+        email_address: email,
+        status: 'subscribed',
+        tags: ["Chateau-Le-Marais"]
+      },
+      {
+        headers: {
+          Authorization: `apikey ${mailchimpAPIKey}`,
+        },
+      }
+    );
+
+    res.status(200).json({ message: 'Successfully subscribed' });
+  } catch (error) {
+    res.status(500).json({ error: error.response.data.title });
+  }
+});
+
+
+/**
  * API handling notification emails on Miss-Registering form submit
  * it will alkso send an email to notify the manager that new miss registered.
  */
