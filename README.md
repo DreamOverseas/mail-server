@@ -27,19 +27,18 @@ POST http://localhost:3002/subscribe/360media-contact
 - Success: `{"message":"Successfully subscribed"}`
 - Error: `{"error":"Some error message"}`
 
-#### 2/3. Quickly Submitting an Email to subscription [MailChimp]
-Users can submit their email through the form on the frontend. The email will be sent to the backend, which processes the subscription request with Mailchimp.
+#### 2. Quickly Submitting an Email to subscription [MailChimp]
+Users can submit their email through the form on the frontend. The email will be sent to the backend, which processes the subscription request with Mailchimp. You will also need to specify the source where it comes from, forexample, if it's from 36O Media, then the "source" fdield should be something like "36O Media".
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3002/subscribe/360media-quick -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
-POST http://localhost:3002/subscribe/chateau-le-marais-quick -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
+POST http://localhost:3002/subscribe/quick-subscription -H "Content-Type: application/json" -d '{"email":"test@example.com", "source":"Sample.org"}'
 ```
 **Response**:
 - Success: `{"message":"Successfully subscribed"}`
 - Error: `{"error":"Some error message"}`
-> Note: These will mightly be merged if more platforms are coming up
+> ~~Note: These will mightly be merged if more platforms are coming up~~ Merged Nov 27 2024
 
-#### 4. Comfirmation Email [Tencent_SMTP]
+#### 3. Comfirmation Email [Tencent_SMTP]
 After Submitting the register form and call this API, an email will be send to the miss and also a notifying email to manager.
 **Example HTTP Request**:
 ```bash
@@ -53,7 +52,7 @@ POST http://localhost:3002/missinternational/register-confirmation
 - Success: `{"message":"邮件发送成功"}`
 - Error: `{"error":"邮件发送失败"}`
 
-#### 5. Roseneath Park Enquiry Email [Tencent_SMTP]
+#### 4. Roseneath Park Enquiry Email [Tencent_SMTP]
 After Submitting the contact us form and call this API, an email will be send to the Costomer service email address in .env with questions
 **Example HTTP Request**:
 ```bash
@@ -70,7 +69,7 @@ POST http://localhost:3002/roseneathpark/contact/
 **Response**:
 As usual, 200 for OK and meh otherwise...
 
-#### 6. Coming Soon...
+#### 5. Coming Soon...
 
 ### Testing the API
 You can test the API endpoint using tools like Postman or cURL.
@@ -82,4 +81,4 @@ curl -X POST http://localhost:3002/subscribe -H "Content-Type: application/json"
 
 ## Reference
 Author: Hanny Zhang \
-Last Edit: 15:28-AEDT 29/10/2024
+Last Edit: 12:28-AEDT 27/11/2024
