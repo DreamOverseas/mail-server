@@ -70,7 +70,24 @@ POST http://localhost:3002/roseneathpark/contact/
 **Response**:
 As usual, 200 for OK and meh otherwise...
 
-#### 5. Coming Soon...
+#### 5. 1# Club Enquiry Email Services [Tencent_SMTP]
+After Submitting the contact us form and call this API, an email will be send to the Costomer Service email address in .env with questions;
+And send notification Email to the enquiree.
+**Example HTTP Request**:
+```bash
+POST http://localhost:3002/1club/enquiry/
+  -H "Content-Type: application/json" -d '{
+  "Name": "Banana McTester",
+  "PhoneNumber": "+61 123 456 789",
+  "Email": "bananas@example.com",
+  "Subject": "General Inquiry",
+  "Question": "I'd like to inquire about Membership events."
+}'
+```
+**Response**:
+As usual, 200 for OK and meh otherwise...
+
+#### 6. Coming Soon...
 
 ### Testing the API
 You can test the API endpoint using tools like Postman or cURL.
@@ -82,4 +99,4 @@ curl -X POST http://localhost:3002/subscribe -H "Content-Type: application/json"
 
 ## Reference
 Author: Hanny Zhang \
-Last Edit: 11:15-AEDT 02/12/2024
+Last Edit: 13:58-AEDT 02/12/2024
