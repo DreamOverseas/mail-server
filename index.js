@@ -30,7 +30,7 @@ const transporter = nodemailer.createTransport({
 });
 const manager_email = process.env.MISS_REG_MANAGER_EMAIL;
 const roseneath_cs = process.env.COSTOMER_SERVICE_ROSENEATH;
-
+const oneClub_cs = process.env.COSTOMER_SERVICE_1CLUB;
 
 /**
  * API handling subscription for 360 Media website fron contact page
@@ -246,6 +246,68 @@ Company: ${Company || 'Not provided'}`,
       return res.status(500).json({ error: "Failed to send service's email." });
     }
     console.log('CS Email sent successfully:', info.response);
+  });
+
+  // if no problem encountered:
+  res.status(200).json({ message: 'Enquiry sent successfully!' });
+});
+
+
+/**
+ * API handling Contact enquiries from 1 club website
+*/
+app.post('/1club/enquiry', (req, res) => {
+  const { Name, PhoneNumber, Email, Subject, Question } = req.body;
+
+  // Check for required fields
+  if (!Name || !Email || !Subject || !Question) {
+    return res.status(400).json({ error: 'Name, Email, Subject, and Question are required fields.' });
+  }
+
+  // Define email content
+  const mailOptions = {
+    from: '1# Club Website <melbourne@do360.com>',
+    to: oneClub_cs,
+    subject: `Question on '${Subject}' from ${Name}`,
+    text: `Hi there,
+
+New enquiry from 1# Club Website:
+${Question}
+
+From: ${Name}
+Email: ${Email}
+Phone Number: ${PhoneNumber || 'Not provided'}`
+  };
+
+  // Structure User Email
+  const userMailOptions = {
+    from: '1# Club Team <melbourne@do360.com>',
+    to: Email,
+    subject: 'Thank You for Your Interest in 1# Club',
+    html: `<p>Dear <strong>${Name}</strong>,</p>
+    <p>Thank you for your inquiry about <strong>1# Club</strong>. We are delighted to receive you enquiries and we will get back to you ASAP.</p>
+    <p style="margin-top: 20px;">Regards,<br>
+    <strong>The 1# Club Team</strong></p>
+    <p style="font-size: 12px; color: #888888; text-align: center;">*This is an auto-send email, please do not reply.</p>
+    `,
+  };
+
+  // Send User Notification Email
+  transporter.sendMail(userMailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      return res.status(500).json({ error: "Failed to send user's email." });
+    }
+    console.log('Client Email sent successfully:', info.response);
+  });
+
+  // Send Costomer Service Email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      return res.status(500).json({ error: "Failed to send service's email." });
+    }
+    console.log('Management Email sent successfully:', info.response);
   });
 
   // if no problem encountered:
