@@ -236,8 +236,7 @@ Company: ${Company || 'Not provided'}`,
       console.error('Error sending email:', error);
       return res.status(500).json({ error: "Failed to send user's email." });
     }
-    console.log('Email sent successfully:', info.response);
-    res.status(200).json({ message: 'Enquiry sent successfully!' });
+    console.log('User Email sent successfully:', info.response);
   });
 
   // Send Costomer Service Email
@@ -246,9 +245,11 @@ Company: ${Company || 'Not provided'}`,
       console.error('Error sending email:', error);
       return res.status(500).json({ error: "Failed to send service's email." });
     }
-    console.log('Email sent successfully:', info.response);
-    res.status(200).json({ message: 'Enquiry sent successfully!' });
+    console.log('CS Email sent successfully:', info.response);
   });
+
+  // if no problem encountered:
+  res.status(200).json({ message: 'Enquiry sent successfully!' });
 });
 
 // Up n Listen
@@ -256,4 +257,4 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// ====== Written By Hanny, L.E.29/10/2024 ====== //
+// ====== Written By Hanny, L.E.02/12/2024 ====== //
