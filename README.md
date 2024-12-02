@@ -52,15 +52,16 @@ POST http://localhost:3002/missinternational/register-confirmation
 - Success: `{"message":"邮件发送成功"}`
 - Error: `{"error":"邮件发送失败"}`
 
-#### 4. Roseneath Park Enquiry Email [Tencent_SMTP]
-After Submitting the contact us form and call this API, an email will be send to the Costomer service email address in .env with questions
+#### 4. Roseneath Park Enquiry Email Services [Tencent_SMTP]
+After Submitting the contact us form and call this API, an email will be send to the Costomer Service email address in .env with questions;
+And send notification Email to the enquiree.
 **Example HTTP Request**:
 ```bash
 POST http://localhost:3002/roseneathpark/contact/
   -H "Content-Type: application/json" -d '{
-  "Name": "John",
+  "Name": "Banana McTester",
   "PhoneNumber": "+61 123 456 789",
-  "Email": "john@example.com",
+  "Email": "bananas@example.com",
   "Company": "Roseneath Park",
   "Subject": "Booking Inquiry",
   "Question": "I'd like to inquire about availability and rates."
@@ -81,4 +82,4 @@ curl -X POST http://localhost:3002/subscribe -H "Content-Type: application/json"
 
 ## Reference
 Author: Hanny Zhang \
-Last Edit: 12:28-AEDT 27/11/2024
+Last Edit: 11:15-AEDT 02/12/2024
