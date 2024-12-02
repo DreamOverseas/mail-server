@@ -211,11 +211,38 @@ Phone Number: ${PhoneNumber || 'Not provided'}
 Company: ${Company || 'Not provided'}`,
   };
 
-  // Send email
+  // Structure User Email
+  const userMailOptions = {
+    from: 'Roseneath Holiday Park <melbourne@do360.com>',
+    to: Email,
+    subject: 'Thank You for Your Interest in Roseneath Holiday Park',
+    html: `<p>Dear <strong>${Name}</strong>,</p>
+    <p>Thank you for your inquiry about <strong>Roseneath Holiday Park</strong>. We are delighted to share that there are many exciting developments happening here, and we can't wait for you to experience them.</p>
+    <p>To proceed with your booking and payment, please click the link below:</p>
+    <p style="text-align: start;">
+        <a href="https://book-directonline.com/properties/roseneathholidaypark-1" style="display: inline-block; padding: 10px 20px; color: #fff; background-color: #007BFF; text-decoration: none; border-radius: 4px;">Book Now!</a>
+    </p>
+    <p>Our management team is looking forward to welcoming you soon.</p> <br>
+    <p style="margin-top: 20px;">Warm regards,<br>
+    <strong>The RHP Management Team</strong></p>
+    `,
+  };
+
+  // Send User Notification Email
+  transporter.sendMail(userMailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      return res.status(500).json({ error: "Failed to send user's email." });
+    }
+    console.log('Email sent successfully:', info.response);
+    res.status(200).json({ message: 'Enquiry sent successfully!' });
+  });
+
+  // Send Costomer Service Email
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
-      return res.status(500).json({ error: 'Failed to send email.' });
+      return res.status(500).json({ error: "Failed to send service's email." });
     }
     console.log('Email sent successfully:', info.response);
     res.status(200).json({ message: 'Enquiry sent successfully!' });
