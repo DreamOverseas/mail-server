@@ -146,6 +146,7 @@ app.post('/missinternational/register-confirmation', (req, res) => {
           <br />
           <p>Best regards,</p>
           <p>John Du | CEO</p>
+          <br><p style="font-size: 12px; color: #888888; text-align: center;">*This is an auto-send email, please do not reply.</p>
           `,
     attachments: [
       {
@@ -225,6 +226,7 @@ Company: ${Company || 'Not provided'}`,
     <p>Our management team is looking forward to welcoming you soon.</p> <br>
     <p style="margin-top: 20px;">Warm regards,<br>
     <strong>The RHP Management Team</strong></p>
+    <br><p style="font-size: 12px; color: #888888; text-align: center;">*This is an auto-send email, please do not reply.</p>
     `,
   };
 
