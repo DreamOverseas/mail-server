@@ -324,12 +324,15 @@ app.post('/1club/membership-notify', (req, res) => {
     from: '1# Club Website <melbourne@do360.com>',
     to: oneClub_cs,
     subject: `来自${Name}的一号俱乐部会员申请`,
-    text: `您好,
-
-    请查看 api.do360.com/admin，有一位新的客户申请了俱乐部会员。
-
-来自: ${Name}
-电子邮件: ${Email}`
+    html: `<p>您好,</p><br/>
+    <p>请点击查看:</p>
+    <p style="text-align: start;">
+        <a href="https://api.do360.com/admin/content-manager/collection-types/api::one-club-membership.one-club-membership?page=1&pageSize=10&sort=Name:ASC&filters[$and][0][CurrentStatus][$eq]=Applied" style="display: inline-block; padding: 10px 20px; color: #fff; background-color: #007BFF; text-decoration: none; border-radius: 4px;">申请人列表</a>
+    </p>
+    <p>有一位新的客户申请了俱乐部会员。</p>
+    <br/>
+    <p>来自: ${Name}<p>
+    <p>电子邮件: ${Email}<p>`
   };
 
   // Structure User Email
