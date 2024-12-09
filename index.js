@@ -285,10 +285,9 @@ ${Question}
     to: Email,
     subject: '感谢您对一号俱乐部的兴趣',
     html: `<p><strong>${Name}</strong> 您好,</p>
-    <p>感谢您对<strong>1号俱乐部</strong>表达兴趣。 我们很高兴能收到您的咨询，并会尽快通过邮件为您解答！</p>
-    <p style="margin-top: 20px;">敬祝安康,<br>
+    <p>感谢您对<strong>1号俱乐部</strong>表达兴趣。 我们很高兴能收到您的咨询，并会尽快通过邮件为您解答！</p> <br/>
     <strong>1号俱乐部</strong></p>
-    <p style="font-size: 12px; color: #888888; text-align: center;">*此邮件为自动发送，请不要回复。</p>
+    <p style="font-size: 12px; color: #888888; text-align: center;">*此邮件为自动发送，请勿回复</p>
     `,
   };
 
@@ -330,25 +329,26 @@ app.post('/1club/membership-notify', (req, res) => {
   const mailOptions = {
     from: '1# Club Website <melbourne@do360.com>',
     to: oneClub_cs,
-    subject: `Application of 1# Club Membership from ${Name}`,
-    text: `Hi there,
+    subject: `来自${Name}的一号俱乐部会员申请`,
+    text: `您好,
 
-    Please Check api.do360.com/admin for the new apllicant applying 1# Club Membership.
+    请查看 api.do360.com/admin，有一位新的客户申请了俱乐部会员。
 
-From: ${Name}
-Email: ${Email}`
+来自: ${Name}
+电子邮件: ${Email}`
   };
 
   // Structure User Email
   const userMailOptions = {
     from: '1# Club <melbourne@do360.com>',
     to: Email,
-    subject: 'Thank You for Your Application to 1# Club Membership',
-    html: `<p>Dear <strong>${Name}</strong>,</p>
-    <p>Thank you for your inquiry about <strong>1# Club</strong>. We are delighted to receive you enquiries and we will get back to you ASAP.</p>
-    <p style="margin-top: 20px;">Regards,<br>
-    <strong>The 1# Club Team</strong></p>
-    <p style="font-size: 12px; color: #888888; text-align: center;">*This is an auto-send email, please do not reply.</p>
+    subject: '感谢您申请1号俱乐部会员',
+    html: `<p><strong>${Name}</strong> 您好,</p>
+    <p>感谢您的耐心，我们已经收到您的俱乐部会员申请。</p> <br/>
+    <p>我们将会即刻开始处理您的申请，请等待2-5个工作日。我们将会在审核后通过电邮/短信与您跟进。</p> <br/>
+    <p style="margin-top: 20px;">敬祝安康,<br>
+    <strong>1号俱乐部团队</strong></p>
+    <p style="font-size: 12px; color: #888888; text-align: center;">*此邮件为自动发送，请勿回复</p>
     `,
   };
 
