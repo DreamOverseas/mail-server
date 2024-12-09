@@ -19,15 +19,9 @@ const mailchimpAPIKey = process.env.MC_API_KEY;
 const audienceID = process.env.MC_AUDIENCE_ID;
 const serverPrefix = 'us21';
 
-// Tencent Email SMTP settings
-const transporter = nodemailer.createTransport({
-  host: 'smtp.exmail.qq.com', // SMTP server endpoint
-  port: 465,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+// Config imports
+const transporter = require('./config/transporter');
+
 const manager_email = process.env.MISS_REG_MANAGER_EMAIL;
 const roseneath_cs = process.env.COSTOMER_SERVICE_ROSENEATH;
 const oneClub_cs = process.env.COSTOMER_SERVICE_1CLUB;
