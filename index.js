@@ -268,22 +268,82 @@ app.post('/1club/enquiry', (req, res) => {
   const mailOptions = {
     from: '1# Club Website <melbourne@do360.com>',
     to: oneClub_cs,
-    subject: `Question on '${Subject}' from ${Name}`,
-    text: `Hi there,
+    subject: `${Name}的关于'${Subject}'的咨询`,
+    text: `您好,
 
-New enquiry from 1# Club Website:
+1号俱乐部网站里有新的咨询消息，请尽快查看回复：
 ${Question}
 
-From: ${Name}
-Email: ${Email}
-Phone Number: ${PhoneNumber || 'Not provided'}`
+来自: ${Name}
+电子邮箱: ${Email}
+电话: ${PhoneNumber || '未提供'}`
   };
 
   // Structure User Email
   const userMailOptions = {
     from: '1# Club Team <melbourne@do360.com>',
     to: Email,
-    subject: 'Thank You for Your Interest in 1# Club',
+    subject: '感谢您对一号俱乐部的兴趣',
+    html: `<p><strong>${Name}</strong> 您好,</p>
+    <p>感谢您对<strong>1号俱乐部</strong>表达兴趣。 我们很高兴能收到您的咨询，并会尽快通过邮件为您解答！</p>
+    <p style="margin-top: 20px;">敬祝安康,<br>
+    <strong>1号俱乐部</strong></p>
+    <p style="font-size: 12px; color: #888888; text-align: center;">*此邮件为自动发送，请不要回复。</p>
+    `,
+  };
+
+  // Send User Notification Email
+  transporter.sendMail(userMailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      return res.status(500).json({ error: "Failed to send user's email." });
+    }
+    console.log('Client Email sent successfully:', info.response);
+  });
+
+  // Send Costomer Service Email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      return res.status(500).json({ error: "Failed to send service's email." });
+    }
+    console.log('Management Email sent successfully:', info.response);
+  });
+
+  // if no problem encountered:
+  res.status(200).json({ message: 'Enquiry sent successfully!' });
+});
+
+
+/**
+ * API handling Contact enquiries from 1 club website
+*/
+app.post('/1club/membership-notify', (req, res) => {
+  const { Name, Email } = req.body;
+
+  // Check for required fields
+  if (!Name || !Email) {
+    return res.status(400).json({ error: 'Name and Email are required fields.' });
+  }
+
+  // Define email content
+  const mailOptions = {
+    from: '1# Club Website <melbourne@do360.com>',
+    to: oneClub_cs,
+    subject: `Application of 1# Club Membership from ${Name}`,
+    text: `Hi there,
+
+    Please Check api.do360.com/admin for the new apllicant applying 1# Club Membership.
+
+From: ${Name}
+Email: ${Email}`
+  };
+
+  // Structure User Email
+  const userMailOptions = {
+    from: '1# Club <melbourne@do360.com>',
+    to: Email,
+    subject: 'Thank You for Your Application to 1# Club Membership',
     html: `<p>Dear <strong>${Name}</strong>,</p>
     <p>Thank you for your inquiry about <strong>1# Club</strong>. We are delighted to receive you enquiries and we will get back to you ASAP.</p>
     <p style="margin-top: 20px;">Regards,<br>
@@ -311,12 +371,13 @@ Phone Number: ${PhoneNumber || 'Not provided'}`
   });
 
   // if no problem encountered:
-  res.status(200).json({ message: 'Enquiry sent successfully!' });
+  res.status(200).json({ message: 'Notification sent successfully!' });
 });
+
 
 // Up n Listen
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// ====== Written By Hanny, L.E.02/12/2024 ====== //
+// ====== Written By Hanny, L.E.09/12/2024 ====== //
