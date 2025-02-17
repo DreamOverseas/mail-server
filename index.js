@@ -3,16 +3,33 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const cors = require('cors');
 const QRCode = require('qrcode');
-
 require('dotenv').config();
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://1club.world',
+];
 
 // Set port to 3002
 const app = express();
 const port = 3002;
 
 // Middleware
+const corsOptions = {
+  origin: function(origin, callback) {
+    // 如果请求中没有 origin（如同域请求或非浏览器环境下的请求），直接允许
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
-app.use(cors());
 
 // Mailchimp secrets
 const mailchimpAPIKey = process.env.MC_API_KEY;
