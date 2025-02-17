@@ -378,7 +378,7 @@ app.post('/1club/membership-notify', (req, res) => {
 app.post('/1club/coupon_distribute', async (req, res) => {
   const { name, email, data, title } = req.body; 
 
-  if (!name || !data || !email) {
+  if (!name || !data || !email || !title) {
     return res.status(400).json({ error: 'Missing required fields.' });
   }
 
@@ -395,17 +395,17 @@ app.post('/1club/coupon_distribute', async (req, res) => {
       const userMailOptions = {
         from: '1# Club <info@1club.world>',
         to: email,
-        subject: '这是您的兑换券，请查收 / This is your coupon from 1 Club',
+        subject: '这是您的兑换券，请查收 / Your coupon from 1 Club',
         html: `
           <p><strong>${name}</strong> 您好,</p>
           <p>感谢您使用一号俱乐部的会员商城, 这是您的兑换券：</p> 
-          <p>Thank you for using the Membership Market, here is your coupon：</p> 
+          <p>Thank you for using the Member's Market, here is your coupon: </p> 
           <br/>
           <div style="text-align:center;">
             <h2>${title}</h2>
             <img src="cid:qrcode" alt="Coupon QR Code" style="max-width: 250px; margin-top: 10px;"/>
           </div>
-          <p>请值提供商处出示此码并告知来自1Club，他们会帮助您进行核销。如果有任何问题，欢迎随时联系我们！</p>
+          <p>请至提供商处出示此码并告知来自1Club，他们会帮助您进行核销。如果有任何问题，欢迎随时联系我们！</p>
           <p>Please head to the Service Provider and show them this QR code. If you have any questions, please no not hesitate to contact us!</p>
           <br/>
           <p style="margin-top: 20px;">敬祝安康,<br>
