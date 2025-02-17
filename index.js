@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
 const axios = require('axios');
 const cors = require('cors');
+const QRCode = require('qrcode');
 
 require('dotenv').config();
 
@@ -20,7 +20,8 @@ const audienceID = process.env.MC_AUDIENCE_ID;
 const serverPrefix = 'us21';
 
 // Config imports
-const transporter = require('./config/transporter');
+const sender_DO = require('./config/transporter').transporter_send_do;
+const sender_1club = require('./config/transporter').transporter_send_1club;
 
 const manager_email = process.env.MISS_REG_MANAGER_EMAIL;
 const roseneath_cs = process.env.COSTOMER_SERVICE_ROSENEATH;
@@ -160,7 +161,7 @@ app.post('/missinternational/register-confirmation', (req, res) => {
   };
 
   // Send them!
-  transporter.sendMail(mailOptions, (error, info) => {
+  sender_DO.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log('邮件发送失败:', error);
       return res.status(500).json({ error: '邮件发送失败' });
@@ -169,7 +170,7 @@ app.post('/missinternational/register-confirmation', (req, res) => {
     res.status(200).json({ message: '邮件发送成功' });
   });
 
-  transporter.sendMail(mailOptions_manager, (error, info) => {
+  sender_DO.sendMail(mailOptions_manager, (error, info) => {
     if (error) {
       console.log('邮件发送失败:', error);
       return res.status(500).json({ error: '邮件发送失败' });
@@ -225,7 +226,7 @@ Company: ${Company || 'Not provided'}`,
   };
 
   // Send User Notification Email
-  transporter.sendMail(userMailOptions, (error, info) => {
+  sender_DO.sendMail(userMailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
       return res.status(500).json({ error: "Failed to send user's email." });
@@ -234,7 +235,7 @@ Company: ${Company || 'Not provided'}`,
   });
 
   // Send Costomer Service Email
-  transporter.sendMail(mailOptions, (error, info) => {
+  sender_DO.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
       return res.status(500).json({ error: "Failed to send service's email." });
@@ -286,7 +287,7 @@ ${Question}
   };
 
   // Send User Notification Email
-  transporter.sendMail(userMailOptions, (error, info) => {
+  sender_DO.sendMail(userMailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
       return res.status(500).json({ error: "Failed to send user's email." });
@@ -295,7 +296,7 @@ ${Question}
   });
 
   // Send Costomer Service Email
-  transporter.sendMail(mailOptions, (error, info) => {
+  sender_DO.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
       return res.status(500).json({ error: "Failed to send service's email." });
@@ -350,7 +351,7 @@ app.post('/1club/membership-notify', (req, res) => {
   };
 
   // Send User Notification Email
-  transporter.sendMail(userMailOptions, (error, info) => {
+  sender_1club.sendMail(userMailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
       return res.status(500).json({ error: "Failed to send user's email." });
@@ -359,7 +360,7 @@ app.post('/1club/membership-notify', (req, res) => {
   });
 
   // Send Costomer Service Email
-  transporter.sendMail(mailOptions, (error, info) => {
+  sender_1club.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
       return res.status(500).json({ error: "Failed to send service's email." });
@@ -371,10 +372,78 @@ app.post('/1club/membership-notify', (req, res) => {
   res.status(200).json({ message: 'Notification sent successfully!' });
 });
 
+/**
+ * API handling Sending Coupon QR to the Client
+*/
+app.post('/1club/coupon_distribute', async (req, res) => {
+  const { name, email, data, title } = req.body; 
+
+  if (!name || !data || !email) {
+    return res.status(400).json({ error: 'Missing required fields.' });
+  }
+
+  try {
+    QRCode.toDataURL(data, (err, qrCodeDataUrl) => {
+      if (err) {
+        console.error('Error generating QR code:', err);
+        return res.status(500).json({ error: 'Failed to generate QR code.' });
+      }
+
+      const base64Data = qrCodeDataUrl.replace(/^data:image\/png;base64,/, "");
+      const imgBuffer = Buffer.from(base64Data, 'base64');
+
+      const userMailOptions = {
+        from: '1# Club <info@1club.world>',
+        to: email,
+        subject: '这是您的兑换券，请查收 / This is your coupon from 1 Club',
+        html: `
+          <p><strong>${name}</strong> 您好,</p>
+          <p>感谢您使用一号俱乐部的会员商城, 这是您的兑换券：</p> 
+          <p>Thank you for using the Membership Market, here is your coupon：</p> 
+          <br/>
+          <div style="text-align:center;">
+            <h2>${title}</h2>
+            <img src="cid:qrcode" alt="Coupon QR Code" style="max-width: 250px; margin-top: 10px;"/>
+          </div>
+          <p>请值提供商处出示此码并告知来自1Club，他们会帮助您进行核销。如果有任何问题，欢迎随时联系我们！</p>
+          <p>Please head to the Service Provider and show them this QR code. If you have any questions, please no not hesitate to contact us!</p>
+          <br/>
+          <p style="margin-top: 20px;">敬祝安康,<br>
+          <strong>1号俱乐部团队</strong></p>
+          <p style="font-size: 12px; color: #888888; text-align: center;">*此邮件为自动发送，请勿回复</p>
+        `,
+        attachments: [
+          {
+            filename: 'coupon.png',
+            content: imgBuffer,
+            encoding: 'base64',
+            cid: 'qrcode',
+          },
+        ],
+      };
+
+      sender_1club.sendMail(userMailOptions, (error, info) => {
+        if (error) {
+          console.error('Error sending email:', error);
+          return res.status(500).json({ error: "Failed to send user's email." });
+        }
+        console.log('Client Email sent successfully:', info.response);
+      });
+
+      res.status(200).json({ message: 'Notification sent successfully!' });
+    });
+
+  } catch (error) {
+    console.error('Unexpected Error:', error);
+    res.status(500).json({ error: 'Unexpected server error.' });
+  }
+});
+
+
 
 // Up n Listen
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// ====== Written By Hanny, L.E.09/12/2024 ====== //
+// ====== Written By Hanny, L.E.17/02/2025 ====== //
