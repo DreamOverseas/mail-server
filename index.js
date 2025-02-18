@@ -43,7 +43,7 @@ const serverPrefix = 'us21';
 
 // Config imports
 const sender_DO = require('./config/transporter').transporter_send_do;
-const sender_1club = require('./config/transporter').transporter_send_1club;
+//const sender_1club = require('./config/transporter').transporter_send_1club;
 
 const manager_email = process.env.MISS_REG_MANAGER_EMAIL;
 const roseneath_cs = process.env.COSTOMER_SERVICE_ROSENEATH;
@@ -373,7 +373,7 @@ app.post('/1club/membership-notify', (req, res) => {
   };
 
   // Send User Notification Email
-  sender_1club.sendMail(userMailOptions, (error, info) => {
+  sender_DO.sendMail(userMailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
       return res.status(500).json({ error: "Failed to send user's email." });
@@ -382,7 +382,7 @@ app.post('/1club/membership-notify', (req, res) => {
   });
 
   // Send Costomer Service Email
-  sender_1club.sendMail(mailOptions, (error, info) => {
+  sender_DO.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
       return res.status(500).json({ error: "Failed to send service's email." });
@@ -444,7 +444,7 @@ app.post('/1club/coupon_distribute', async (req, res) => {
         ],
       };
 
-      sender_1club.sendMail(userMailOptions, (error, info) => {
+      sender_DO.sendMail(userMailOptions, (error, info) => {
         if (error) {
           console.error('Error sending email:', error);
           return res.status(500).json({ error: "Failed to send user's email." });
