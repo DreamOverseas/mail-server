@@ -415,7 +415,7 @@ app.post('/1club/coupon_distribute', async (req, res) => {
       const imgBuffer = Buffer.from(base64Data, 'base64');
 
       const userMailOptions = {
-        from: '1# Club <info@1club.world>',
+        from: '1# Club <melbourne@do360.com>',
         to: email,
         subject: '这是您的兑换券，请查收 / Your coupon from 1 Club',
         html: `
@@ -462,10 +462,9 @@ app.post('/1club/coupon_distribute', async (req, res) => {
 });
 
 
-
 // Up n Listen
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// ====== Written By Hanny, L.E.17/02/2025 ====== //
+// ====== Written By Hanny, L.E.19/02/2025 ====== //
