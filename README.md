@@ -101,7 +101,21 @@ POST http://localhost:3002/1club/membership-notify
 **Response**:
 As usual, 200 for OK and meh otherwise...
 
-#### 7. Coming Soon...
+#### 7. 360Media mechant uploading received notification [Tencent_SMTP]
+After mechants submitting the form from 360Media, call this API. This will send a notification to the mechant's submitted email, as well as the manager's email.
+**Example HTTP Request**:
+```bash
+POST http://localhost:3002/1club/membership-notify
+  -H "Content-Type: application/json" -d '{
+  "firstName": "Banana",
+  "lastName": "McTester",
+  "email": "bananas@example.com"
+}'
+```
+**Response**:
+As usual, 200 for OK and MEHHHH otherwise...
+
+#### 8. Coming Soon...
 
 ### Testing the API
 You can test the API endpoint using tools like Postman or cURL.
