@@ -7,3 +7,5 @@ function formatName(firstName, lastName) {
         return `${lastName}${firstName}`;
     }
 }
+
+module.exports = { formatName };

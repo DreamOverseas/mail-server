@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const cors = require('cors');
 const QRCode = require('qrcode');
+const { formatName } = require('./src/util');
 require('dotenv').config();
 
 const allowedOrigins = [
@@ -48,6 +49,51 @@ const sender_DO = require('./config/transporter').transporter_send_do;
 const manager_email = process.env.MISS_REG_MANAGER_EMAIL;
 const roseneath_cs = process.env.COSTOMER_SERVICE_ROSENEATH;
 const oneClub_cs = process.env.COSTOMER_SERVICE_1CLUB;
+
+
+/**
+ * API handling subscription for 360 Media website fron contact page
+ * to start, run ``` node index.js ``` from root
+ */
+app.post('/360media/merchant-upload-notify', async (req, res) => {
+  const { email, firstName, lastName } = req.body;
+
+  // Check if required data is provided
+  if (!email || !firstName || !lastName) {
+    return res.status(400).json({ error: 'Name and email is required' });
+  }
+
+  // Email Contents for new register
+  const mailOptions = {
+    from: '360 Media - 360传媒 <melbourne@do360.com>',
+    to: email,
+    subject: 'Merchant Upload Received - 商家信息已收到',
+    html: `<p>Dear <b>${formatName(firstName, lastName)}</b>：</p>
+          <br />
+          <p>感谢提交商家信息！我们已经收到您的提交内容并在全力审核中。请您耐心等待，如有问题请联系john.du@do360.com。</p>
+          <p>Thank you for uploading your merchant details! We've received it and verifying it ASAP. Please wait paitiently we'll get back to you. For any further enquiries please contact us at john.du@do360.com.</p>
+          <br />
+          <p>感谢您的配合！</p>
+          <p>Thanks for your cooperation！</p>
+          <br />
+          <p>Best regards,</p>
+          <p>John Du | CEO</p>
+          <br><p style="font-size: 12px; color: #888888; text-align: center;">*This is an auto-send email, please do not reply.</p>
+          `,
+  };
+
+  // Send NOW
+  sender_DO.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('邮件发送失败:', error);
+      return res.status(500).json({ error: '邮件发送失败' });
+    }
+    console.log('邮件发送成功:', info.response);
+    res.status(200).json({ message: '邮件发送成功' });
+  });
+
+})
+
 
 /**
  * API handling subscription for 360 Media website fron contact page
