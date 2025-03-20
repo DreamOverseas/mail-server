@@ -105,7 +105,7 @@ As usual, 200 for OK and meh otherwise...
 After mechants submitting the form from 360Media, call this API. This will send a notification to the mechant's submitted email, as well as the manager's email.
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3002/1club/membership-notify
+POST http://localhost:3002/360media/merchant-upload-notify
   -H "Content-Type: application/json" -d '{
   "firstName": "Banana",
   "lastName": "McTester",
