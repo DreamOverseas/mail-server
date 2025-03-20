@@ -14,7 +14,7 @@ This Service API Collection allows users to achieve a series of email-related op
 Users can submit their email through the form on the frontend. The email, name and message(optional) to backend, then subscribe user to the audience.
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3002/subscribe/360media-contact 
+POST https://mail-service.do360.com/subscribe/360media-contact 
 -H "Content-Type: application/json"
 -d '{
   "email": "test@example.com",
@@ -31,7 +31,7 @@ POST http://localhost:3002/subscribe/360media-contact
 Users can submit their email through the form on the frontend. The email will be sent to the backend, which processes the subscription request with Mailchimp. You will also need to specify the source where it comes from, forexample, if it's from 36O Media, then the "source" fdield should be something like "36O Media".
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3002/subscribe/quick-subscription -H "Content-Type: application/json" -d '{"email":"test@example.com", "source":"Sample.org"}'
+POST https://mail-service.do360.com/subscribe/quick-subscription -H "Content-Type: application/json" -d '{"email":"test@example.com", "source":"Sample.org"}'
 ```
 **Response**:
 - Success: `{"message":"Successfully subscribed"}`
@@ -42,7 +42,7 @@ POST http://localhost:3002/subscribe/quick-subscription -H "Content-Type: applic
 After Submitting the register form and call this API, an email will be send to the miss and also a notifying email to manager.
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3002/missinternational/register-confirmation 
+POST https://mail-service.do360.com/missinternational/register-confirmation 
   -H "Content-Type: application/json" -d '{
       "name" : "Banana McTester",
       "email": "test@example.com"
@@ -57,7 +57,7 @@ After Submitting the contact us form and call this API, an email will be send to
 And send notification Email to the enquiree.
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3002/roseneathpark/contact/
+POST https://mail-service.do360.com/roseneathpark/contact/
   -H "Content-Type: application/json" -d '{
   "Name": "Banana McTester",
   "PhoneNumber": "+61 123 456 789",
@@ -75,7 +75,7 @@ After Submitting the contact us form and call this API, an email will be send to
 And send notification Email to the enquiree.
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3002/1club/enquiry/
+POST https://mail-service.do360.com/1club/enquiry/
   -H "Content-Type: application/json" -d '{
   "Name": "Banana McTester",
   "PhoneNumber": "+61 123 456 789",
@@ -92,7 +92,7 @@ After Submitting the membership application form and call this API, an email wil
 And send notification Email to the applicant.
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3002/1club/membership-notify
+POST https://mail-service.do360.com/1club/membership-notify
   -H "Content-Type: application/json" -d '{
   "Name": "Banana McTester",
   "Email": "bananas@example.com"
@@ -105,7 +105,7 @@ As usual, 200 for OK and meh otherwise...
 After mechants submitting the form from 360Media, call this API. This will send a notification to the mechant's submitted email, as well as the manager's email.
 **Example HTTP Request**:
 ```bash
-POST http://localhost:3002/360media/merchant-upload-notify
+POST https://mail-service.do360.com/360media/merchant-upload-notify
   -H "Content-Type: application/json" -d '{
   "firstName": "Banana",
   "lastName": "McTester",
@@ -122,9 +122,9 @@ You can test the API endpoint using tools like Postman or cURL.
 
 **Example cURL Request**:
 ```bash
-curl -X POST http://localhost:3002/subscribe -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
+curl -X POST https://mail-service.do360.com/subscribe -H "Content-Type: application/json" -d '{"email":"test@example.com"}'
 ```
 
 ## Reference
 Author: Hanny Zhang \
-Last Edit: 13:58-AEDT 09/12/2024
+Last Edit: 13:58-AEDT 20/03/2025
