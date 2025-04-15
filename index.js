@@ -52,6 +52,47 @@ const oneClub_cs = process.env.COSTOMER_SERVICE_1CLUB;
 
 
 /**
+ * API handling email code verification for registration
+ * to start, run ``` node index.js ``` from root
+ */
+app.post('/do-mail-code-verify', async (req, res) => {
+  const { email, from, verify_code } = req.body;
+
+  // Check if required data is provided
+  if (!email || !from || !verify_code) {
+    return res.status(400).json({ error: 'Sender, email and verification code is required' });
+  }
+
+  // Email Options for the verification
+  const mailOptions = {
+    from: `${from} <melbourne@do360.com>`,
+    to: email,
+    subject: 'Your Registration Verification Code',
+    html: `<p>Dear new register: </p>
+          <br />
+          <p>Your unique verrification code is <b>${verify_code}</b>. Please don't share with others. </p>
+          <br />
+          <p>Thank you for register!</p>
+          <br />
+          <p>Best regards,</p>
+          <p>${from}</p>
+          <br><p style="font-size: 12px; color: #888888; text-align: center;">*This is an auto-send email, please do not reply.</p>
+          `,
+  };
+
+  // Send NOW
+  sender_DO.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('邮件发送失败:', error);
+      return res.status(500).json({ error: '邮件发送失败' });
+    }
+    console.log('邮件发送成功:', info.response);
+    res.status(200).json({ message: '邮件发送成功' });
+  });
+})
+
+
+/**
  * API handling subscription for 360 Media website fron contact page
  * to start, run ``` node index.js ``` from root
  */
