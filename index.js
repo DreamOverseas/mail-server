@@ -8,12 +8,14 @@ require('dotenv').config();
 
 const allowedOrigins = [
   'http://localhost:3000', // TODO: Del
+  'http://localhost:3001', // TODO: Del
+  'http://localhost:3053', // TODO: Del
+  'http://localhost:3003', // TODO: Del
   'https://do360.com',
   'https://1club.world',
   'https://roseneathholidaypark.au',
   'https://coupon.do360.com',
   'https://missinternational.world',
-  'https://ngo-hub.org',
 ];
 
 // Set port to 3002
