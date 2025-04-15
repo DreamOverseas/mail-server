@@ -11,7 +11,7 @@ This Service API Collection allows users to achieve a series of email-related op
 ### Usage / API List
 
 #### 1. Submitting an Email to subscription [MailChimp]
-Users can submit their email through the form on the frontend. The email, name and message(optional) to backend, then subscribe user to the audience.
+Users can submit their email through the form on the frontend. The email, name and message(optional) to backend, then subscribe user to the audience. \
 **Example HTTP Request**:
 ```bash
 POST https://mail-service.do360.com/subscribe/360media-contact 
@@ -28,7 +28,7 @@ POST https://mail-service.do360.com/subscribe/360media-contact
 - Error: `{"error":"Some error message"}`
 
 #### 2. Quickly Submitting an Email to subscription [MailChimp]
-Users can submit their email through the form on the frontend. The email will be sent to the backend, which processes the subscription request with Mailchimp. You will also need to specify the source where it comes from, forexample, if it's from 36O Media, then the "source" fdield should be something like "36O Media".
+Users can submit their email through the form on the frontend. The email will be sent to the backend, which processes the subscription request with Mailchimp. You will also need to specify the source where it comes from, forexample, if it's from 36O Media, then the "source" fdield should be something like "36O Media". \
 **Example HTTP Request**:
 ```bash
 POST https://mail-service.do360.com/subscribe/quick-subscription -H "Content-Type: application/json" -d '{"email":"test@example.com", "source":"Sample.org"}'
@@ -39,7 +39,7 @@ POST https://mail-service.do360.com/subscribe/quick-subscription -H "Content-Typ
 > ~~Note: These will mightly be merged if more platforms are coming up~~ Merged Nov 27 2024
 
 #### 3. Comfirmation Email [Tencent_SMTP]
-After Submitting the register form and call this API, an email will be send to the miss and also a notifying email to manager.
+After Submitting the register form and call this API, an email will be send to the miss and also a notifying email to manager. \
 **Example HTTP Request**:
 ```bash
 POST https://mail-service.do360.com/missinternational/register-confirmation 
@@ -54,7 +54,7 @@ POST https://mail-service.do360.com/missinternational/register-confirmation
 
 #### 4. Roseneath Park Enquiry Email Services [Tencent_SMTP]
 After Submitting the contact us form and call this API, an email will be send to the Costomer Service email address in .env with questions;
-And send notification Email to the enquiree.
+And send notification Email to the enquiree. \
 **Example HTTP Request**:
 ```bash
 POST https://mail-service.do360.com/roseneathpark/contact/
@@ -72,7 +72,7 @@ As usual, 200 for OK and meh otherwise...
 
 #### 5. 1# Club Enquiry Email Services [Tencent_SMTP]
 After Submitting the contact us form and call this API, an email will be send to the Costomer Service email address in .env with questions;
-And send notification Email to the enquiree.
+And send notification Email to the enquiree. \
 **Example HTTP Request**:
 ```bash
 POST https://mail-service.do360.com/1club/enquiry/
@@ -89,7 +89,7 @@ As usual, 200 for OK and meh otherwise...
 
 #### 6. 1# Club Membership Application Email Services [Tencent_SMTP]
 After Submitting the membership application form and call this API, an email will be send to the Costomer Service email address in .env for notification;
-And send notification Email to the applicant.
+And send notification Email to the applicant. \
 **Example HTTP Request**:
 ```bash
 POST https://mail-service.do360.com/1club/membership-notify
@@ -102,7 +102,7 @@ POST https://mail-service.do360.com/1club/membership-notify
 As usual, 200 for OK and meh otherwise...
 
 #### 7. 360Media mechant uploading received notification [Tencent_SMTP]
-After mechants submitting the form from 360Media, call this API. This will send a notification to the mechant's submitted email, as well as the manager's email.
+After mechants submitting the form from 360Media, call this API. This will send a notification to the mechant's submitted email, as well as the manager's email. \
 **Example HTTP Request**:
 ```bash
 POST https://mail-service.do360.com/360media/merchant-upload-notify
@@ -115,7 +115,21 @@ POST https://mail-service.do360.com/360media/merchant-upload-notify
 **Response**:
 As usual, 200 for OK and MEHHHH otherwise...
 
-#### 8. Coming Soon...
+#### 8. All-platform registration email verification code sending [Tencent_SMTP]
+Could be called when new user registered for our platform. This will send the verification code with everything specified. Note that comparason should be done in the frontend.\
+**Example HTTP Request**:
+```bash
+POST https://mail-service.do360.com/360media/merchant-upload-notify
+  -H "Content-Type: application/json" -d '{
+  "from": "Media 360",
+  "verify_code": "123456",
+  "email": "bananas@example.com"
+}'
+```
+**Response**:
+As usual, 200 for OK and MEHHHH otherwise...
+
+#### 9. Coming Soon...
 
 ### Testing the API
 You can test the API endpoint using tools like Postman or cURL.
@@ -127,4 +141,4 @@ curl -X POST https://mail-service.do360.com/subscribe -H "Content-Type: applicat
 
 ## Reference
 Author: Hanny Zhang \
-Last Edit: 13:58-AEDT 20/03/2025
+Last Edit: 11:11-AEDT 15/04/2025
