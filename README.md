@@ -129,7 +129,31 @@ POST https://mail-service.do360.com/360media/merchant-upload-notify
 **Response**:
 As usual, 200 for OK and MEHHHH otherwise...
 
-#### 9. Coming Soon...
+#### 9. Coupon distribution API set [Tencent_SMTP]
+Receives coupon code, and generate QR code then send as attatchment to the user's email given in request. Currently supported 1# Club and RHP. \
+**Example HTTP Request**:
+```bash
+POST https://mail-service.do360.com/roseneathpark/coupon_distribute
+  -H "Content-Type: application/json" -d '{
+  "name": "Banana McTester",
+  "email": "bananas@example.com",
+  "data": "1a2b3c4d5f6e7788g",
+  "title": "This is a Coupon's Title"
+}'
+```
+```bash
+POST https://mail-service.do360.com/1club/coupon_distribute
+  -H "Content-Type: application/json" -d '{
+  "name": "Banana McTester",
+  "email": "bananas@example.com",
+  "data": "1a2b3c4d5f6e7788g",
+  "title": "This is a Coupon's Title"
+}'
+```
+**Response**:
+As usual, 200 for OK and MEHHHH otherwise...
+
+#### 10. Coming Soon...
 
 ### Testing the API
 You can test the API endpoint using tools like Postman or cURL.
@@ -141,4 +165,4 @@ curl -X POST https://mail-service.do360.com/subscribe -H "Content-Type: applicat
 
 ## Reference
 Author: Hanny Zhang \
-Last Edit: 11:11-AEDT 15/04/2025
+Last Edit: 11:52-AEDT 16/04/2025
