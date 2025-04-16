@@ -379,6 +379,73 @@ Company: ${Company || 'Not provided'}`,
   res.status(200).json({ message: 'Enquiry sent successfully!' });
 });
 
+/**
+ * API handling Sending Coupon QR to the Client
+*/
+app.post('/roseneathpark/coupon_distribute', async (req, res) => {
+  const { name, email, data, title } = req.body; 
+
+  if (!name || !data || !email || !title) {
+    return res.status(400).json({ error: 'Missing required fields.' });
+  }
+
+  try {
+    QRCode.toDataURL(data, (err, qrCodeDataUrl) => {
+      if (err) {
+        console.error('Error generating QR code:', err);
+        return res.status(500).json({ error: 'Failed to generate QR code.' });
+      }
+
+      const base64Data = qrCodeDataUrl.replace(/^data:image\/png;base64,/, "");
+      const imgBuffer = Buffer.from(base64Data, 'base64');
+
+      const userMailOptions = {
+        from: 'Roseneath Holiday Park <melbourne@do360.com>',
+        to: email,
+        subject: 'Your coupon from Roseneath Holiday Park / 您兑换的核销券',
+        html: `
+          <p>G'Day <strong>${name}</strong>,</p>
+          <p>Thank you for using the Member's Market at Roseneath Holiday Park, here is your coupon: </p> 
+          <p>感谢您使用罗塞尼斯营地半岛的会员商城, 这是您的兑换券：</p> 
+          <br/>
+          <div style="text-align:center;">
+            <h2>${title}</h2>
+            <img src="cid:qrcode" alt="Coupon QR Code" style="max-width: 250px; margin-top: 10px;"/>
+          </div>
+          <p>Please head to the Site and show our site manager this QR code. If you have any questions, please no not hesitate to contact us!</p>
+          <p>请至营地管理人员处出示此码并告知会员身份，他们会帮助您进行核销。如果有任何问题，欢迎随时联系我们！</p>
+          <br/>
+          <p style="margin-top: 20px;">Warm Regards,<br>
+          <strong>Roseneath Holiday Park</strong></p>
+          <p style="font-size: 12px; color: #888888; text-align: center;">*This email is send automatically, please do not reply.</p>
+        `,
+        attachments: [
+          {
+            filename: 'coupon.png',
+            content: imgBuffer,
+            encoding: 'base64',
+            cid: 'qrcode',
+          },
+        ],
+      };
+
+      sender_DO.sendMail(userMailOptions, (error, info) => {
+        if (error) {
+          console.error('Error sending email:', error);
+          return res.status(500).json({ error: "Failed to send user's email." });
+        }
+        console.log('Client Email sent successfully:', info.response);
+      });
+
+      res.status(200).json({ message: 'Notification sent successfully!' });
+    });
+
+  } catch (error) {
+    console.error('Unexpected Error:', error);
+    res.status(500).json({ error: 'Unexpected server error.' });
+  }
+});
+
 
 /**
  * API handling Contact enquiries from 1 club website
