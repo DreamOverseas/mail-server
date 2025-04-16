@@ -85,10 +85,10 @@ app.post('/do-mail-code-verify', async (req, res) => {
   // Send NOW
   sender_DO.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log('邮件发送失败:', error);
-      return res.status(500).json({ error: '邮件发送失败' });
+      console.log('[do-mail-code-verify] 邮件发送失败:', error);
+      return res.status(500).json({ error: '[do-mail-code-verify] 邮件发送失败' });
     }
-    console.log('邮件发送成功:', info.response);
+    console.log('[do-mail-code-verify] 邮件发送成功:', info.response);
     res.status(200).json({ message: '邮件发送成功' });
   });
 })
@@ -141,19 +141,19 @@ app.post('/360media/merchant-upload-notify', async (req, res) => {
   // Send NOW
   sender_DO.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log('邮件发送失败:', error);
+      console.log('[360media/merchant-upload-notify] 邮件发送失败:', error);
       return res.status(500).json({ error: '邮件发送失败' });
     }
-    console.log('邮件发送成功:', info.response);
+    console.log('[360media/merchant-upload-notify] 邮件发送成功:', info.response);
     res.status(200).json({ message: '邮件发送成功' });
   });
 
   sender_DO.sendMail(mailOptions_manager, (error, info) => {
     if (error) {
-      console.log('邮件发送失败:', error);
+      console.log('[360media/merchant-upload-notify] 邮件发送失败:', error);
       return res.status(500).json({ error: '邮件发送失败' });
     }
-    console.log('邮件发送成功:', info.response);
+    console.log('[360media/merchant-upload-notify] 邮件发送成功:', info.response);
     res.status(200).json({ message: '邮件发送成功' });
   });
 })
@@ -196,12 +196,15 @@ app.post('/subscribe/360media-contact', async (req, res) => {
 
     // Check if the response was successful
     if (response.status === 200) {
+      console.log("[subscribe/360media-contact] New Subscription.");
       res.status(200).json({ message: 'Successfully subscribed' });
     } else {
+      console.log("[subscribe/360media-contact] Subscription Failure.");
       res.status(response.status).json({ error: 'Failed to subscribe' });
     }
   } catch (error) {
     // Handle any errors that occur during the request
+    console.log("[subscribe/360media-contact] Subscription Error.");
     res.status(500).json({ error: 'An error occurred', details: error.message });
   }
 });
@@ -237,9 +240,10 @@ app.post('/subscribe/quick-subscription', async (req, res) => {
         },
       }
     );
-
+    console.log("[subscribe/quick-subscription] New Subscription.");
     res.status(200).json({ message: 'Successfully subscribed' });
   } catch (error) {
+    console.log("[subscribe/quick-subscription] Errored Subscription.");
     res.status(500).json({ error: error.response.data.title });
   }
 });
@@ -295,19 +299,19 @@ app.post('/missinternational/register-confirmation', (req, res) => {
   // Send them!
   sender_DO.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log('邮件发送失败:', error);
+      console.log('[missinternational/register-confirmation] 邮件发送失败:', error);
       return res.status(500).json({ error: '邮件发送失败' });
     }
-    console.log('邮件发送成功:', info.response);
+    console.log('[missinternational/register-confirmation] 邮件发送成功:', info.response);
     res.status(200).json({ message: '邮件发送成功' });
   });
 
   sender_DO.sendMail(mailOptions_manager, (error, info) => {
     if (error) {
-      console.log('邮件发送失败:', error);
+      console.log('[missinternational/register-confirmation] 邮件发送失败:', error);
       return res.status(500).json({ error: '邮件发送失败' });
     }
-    console.log('邮件发送成功:', info.response);
+    console.log('[missinternational/register-confirmation] 邮件发送成功:', info.response);
     res.status(200).json({ message: '邮件发送成功' });
   });
 });
@@ -360,10 +364,10 @@ Company: ${Company || 'Not provided'}`,
   // Send User Notification Email
   sender_DO.sendMail(userMailOptions, (error, info) => {
     if (error) {
-      console.error('Error sending email:', error);
+      console.error('[roseneathpark/contact] Error sending email:', error);
       return res.status(500).json({ error: "Failed to send user's email." });
     }
-    console.log('User Email sent successfully:', info.response);
+    console.log('[roseneathpark/contact] User Email sent successfully:', info.response);
   });
 
   // Send Costomer Service Email
@@ -372,7 +376,7 @@ Company: ${Company || 'Not provided'}`,
       console.error('Error sending email:', error);
       return res.status(500).json({ error: "Failed to send service's email." });
     }
-    console.log('CS Email sent successfully:', info.response);
+    console.log('[roseneathpark/contact] CS Email sent successfully:', info.response);
   });
 
   // if no problem encountered:
@@ -392,7 +396,7 @@ app.post('/roseneathpark/coupon_distribute', async (req, res) => {
   try {
     QRCode.toDataURL(data, (err, qrCodeDataUrl) => {
       if (err) {
-        console.error('Error generating QR code:', err);
+        console.error('[roseneathpark/coupon_distribute] Error generating QR code:', err);
         return res.status(500).json({ error: 'Failed to generate QR code.' });
       }
 
@@ -431,17 +435,17 @@ app.post('/roseneathpark/coupon_distribute', async (req, res) => {
 
       sender_DO.sendMail(userMailOptions, (error, info) => {
         if (error) {
-          console.error('Error sending email:', error);
+          console.error('[roseneathpark/coupon_distribute] Error sending email:', error);
           return res.status(500).json({ error: "Failed to send user's email." });
         }
-        console.log('Client Email sent successfully:', info.response);
+        console.log('[roseneathpark/coupon_distribute] Client Email sent successfully:', info.response);
       });
 
       res.status(200).json({ message: 'Notification sent successfully!' });
     });
 
   } catch (error) {
-    console.error('Unexpected Error:', error);
+    console.error('[roseneathpark/coupon_distribute] Unexpected Error:', error);
     res.status(500).json({ error: 'Unexpected server error.' });
   }
 });
@@ -488,19 +492,19 @@ ${Question}
   // Send User Notification Email
   sender_DO.sendMail(userMailOptions, (error, info) => {
     if (error) {
-      console.error('Error sending email:', error);
+      console.error('[1club/enquiry] Error sending email:', error);
       return res.status(500).json({ error: "Failed to send user's email." });
     }
-    console.log('Client Email sent successfully:', info.response);
+    console.log('[1club/enquiry] Client Email sent successfully:', info.response);
   });
 
   // Send Costomer Service Email
   sender_DO.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.error('Error sending email:', error);
+      console.error('[1club/enquiry] Error sending email:', error);
       return res.status(500).json({ error: "Failed to send service's email." });
     }
-    console.log('Management Email sent successfully:', info.response);
+    console.log('[1club/enquiry] Management Email sent successfully:', info.response);
   });
 
   // if no problem encountered:
@@ -552,19 +556,19 @@ app.post('/1club/membership-notify', (req, res) => {
   // Send User Notification Email
   sender_DO.sendMail(userMailOptions, (error, info) => {
     if (error) {
-      console.error('Error sending email:', error);
+      console.error('[1club/membership-notify] Error sending email:', error);
       return res.status(500).json({ error: "Failed to send user's email." });
     }
-    console.log('Client Email sent successfully:', info.response);
+    console.log('[1club/membership-notify] Client Email sent successfully:', info.response);
   });
 
   // Send Costomer Service Email
   sender_DO.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.error('Error sending email:', error);
+      console.error('[1club/membership-notify] Error sending email:', error);
       return res.status(500).json({ error: "Failed to send service's email." });
     }
-    console.log('Management Email sent successfully:', info.response);
+    console.log('[1club/membership-notify] Management Email sent successfully:', info.response);
   });
 
   // if no problem encountered:
@@ -584,7 +588,7 @@ app.post('/1club/coupon_distribute', async (req, res) => {
   try {
     QRCode.toDataURL(data, (err, qrCodeDataUrl) => {
       if (err) {
-        console.error('Error generating QR code:', err);
+        console.error('[1club/coupon_distribute] Error generating QR code:', err);
         return res.status(500).json({ error: 'Failed to generate QR code.' });
       }
 
@@ -623,17 +627,17 @@ app.post('/1club/coupon_distribute', async (req, res) => {
 
       sender_DO.sendMail(userMailOptions, (error, info) => {
         if (error) {
-          console.error('Error sending email:', error);
+          console.error('[1club/coupon_distribute] Error sending email:', error);
           return res.status(500).json({ error: "Failed to send user's email." });
         }
-        console.log('Client Email sent successfully:', info.response);
+        console.log('[1club/coupon_distribute] Client Email sent successfully:', info.response);
       });
 
       res.status(200).json({ message: 'Notification sent successfully!' });
     });
 
   } catch (error) {
-    console.error('Unexpected Error:', error);
+    console.error('[1club/coupon_distribute] Unexpected Error:', error);
     res.status(500).json({ error: 'Unexpected server error.' });
   }
 });
@@ -644,4 +648,4 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// ====== Written By Hanny, L.E.19/03/2025 ====== //
+// ====== Written By Hanny, L.E.16/04/2025 ====== //
