@@ -16,6 +16,7 @@ const allowedOrigins = [
   'https://roseneathholidaypark.au',
   'https://coupon.do360.com',
   'https://missinternational.world',
+  'https://world-cooperation.org',
 ];
 
 // Set port to 3002
