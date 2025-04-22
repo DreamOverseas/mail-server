@@ -11,6 +11,7 @@ const allowedOrigins = [
   'http://localhost:3001', // TODO: Del
   'http://localhost:3053', // TODO: Del
   'http://localhost:3003', // TODO: Del
+  'http://localhost:5173', // TODO: Del
   'https://do360.com',
   'https://1club.world',
   'https://roseneathholidaypark.au',
