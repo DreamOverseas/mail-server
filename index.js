@@ -385,7 +385,7 @@ Company: ${Company || 'Not provided'}`,
 });
 
 /**
- * API handling Sending Coupon QR to the Client
+ * API handling Sending Coupon QR to the Client [RHP]
 */
 app.post('/roseneathpark/coupon_distribute', async (req, res) => {
   const { name, email, data, title } = req.body; 
@@ -577,7 +577,7 @@ app.post('/1club/membership-notify', (req, res) => {
 });
 
 /**
- * API handling Sending Coupon QR to the Client
+ * API handling Sending Coupon QR to the Client [1Club]
 */
 app.post('/1club/coupon_distribute', async (req, res) => {
   const { name, email, data, title } = req.body; 
@@ -643,10 +643,75 @@ app.post('/1club/coupon_distribute', async (req, res) => {
   }
 });
 
+/**
+ * API handling Sending Coupon QR to the Client [WCO]
+*/
+app.post('/wco/coupon_distribute', async (req, res) => {
+  const { name, email, data, title } = req.body; 
+
+  if (!name || !data || !email || !title) {
+    return res.status(400).json({ error: 'Missing required fields.' });
+  }
+
+  try {
+    QRCode.toDataURL(data, (err, qrCodeDataUrl) => {
+      if (err) {
+        console.error('[wco/coupon_distribute] Error generating QR code:', err);
+        return res.status(500).json({ error: 'Failed to generate QR code.' });
+      }
+
+      const base64Data = qrCodeDataUrl.replace(/^data:image\/png;base64,/, "");
+      const imgBuffer = Buffer.from(base64Data, 'base64');
+
+      const userMailOptions = {
+        from: 'WTC Elite Club x WCO <melbourne@do360.com>',
+        to: email,
+        subject: '这是您的兑换券，请查收 / Your coupon from WTC & WCO',
+        html: `
+          <p><strong>${name}</strong> 您好,</p>
+          <p>感谢您使用会员商城, 这是您的兑换券：</p> 
+          <br/>
+          <div style="text-align:center;">
+            <h2>${title}</h2>
+            <img src="cid:qrcode" alt="Coupon QR Code" style="max-width: 250px; margin-top: 10px;"/>
+          </div>
+          <p>请至提供商处出示此码并告知您是来自WTC Elite Club和WCO的联合会员，他们会帮助您进行核销。如果有任何问题，欢迎随时联系我们！</p>
+          <br/>
+          <p style="margin-top: 20px;">敬祝安康,<br>
+          <strong>WTC Elite Club x WCO Team</strong></p>
+          <p style="font-size: 12px; color: #888888; text-align: center;">*此邮件为自动发送，请勿回复</p>
+        `,
+        attachments: [
+          {
+            filename: 'coupon.png',
+            content: imgBuffer,
+            encoding: 'base64',
+            cid: 'qrcode',
+          },
+        ],
+      };
+
+      sender_DO.sendMail(userMailOptions, (error, info) => {
+        if (error) {
+          console.error('[wco/coupon_distribute] Error sending email:', error);
+          return res.status(500).json({ error: "Failed to send user's email." });
+        }
+        console.log('[wco/coupon_distribute] Client Email sent successfully:', info.response);
+      });
+
+      res.status(200).json({ message: 'Notification sent successfully!' });
+    });
+
+  } catch (error) {
+    console.error('[wco/coupon_distribute] Unexpected Error:', error);
+    res.status(500).json({ error: 'Unexpected server error.' });
+  }
+});
+
 
 // Up n Listen
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// ====== Written By Hanny, L.E.16/04/2025 ====== //
+// ====== Written By Hanny, L.E.22/04/2025 ====== //
