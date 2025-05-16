@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const cors = require('cors');
 const QRCode = require('qrcode');
-const { formatName } = require('./src/util');
+const { formatName, ISO2Date } = require('./src/util');
 require('dotenv').config();
 
 const allowedOrigins = [
@@ -674,7 +674,7 @@ app.post('/wco/coupon_distribute', async (req, res) => {
           <br/>
           <div style="text-align:center;">
             <h2>${title}</h2>
-            ${date && `Date of event: <h5>${date}</h5>`}
+            ${(date!=undefined && date!='') && `<h5>Date of event: ${ISO2Date(date)}</h5>`}
             <img src="cid:qrcode" alt="Coupon QR Code" style="max-width: 250px; margin-top: 10px;"/>
           </div>
           <p>请至提供商处出示此码并告知您是来自WTC Elite Club和WCO的联合会员，他们会帮助您进行核销。如果有任何问题，欢迎随时联系我们！</p>
