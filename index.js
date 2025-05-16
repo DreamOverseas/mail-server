@@ -645,10 +645,10 @@ app.post('/1club/coupon_distribute', async (req, res) => {
 });
 
 /**
- * API handling Sending Coupon QR to the Client [WCO]
+ * API handling Sending Coupon QR to the Client, with date of event specified [WCO]
 */
 app.post('/wco/coupon_distribute', async (req, res) => {
-  const { name, email, data, title } = req.body; 
+  const { name, email, data, title, date } = req.body; 
 
   if (!name || !data || !email || !title) {
     return res.status(400).json({ error: 'Missing required fields.' });
@@ -674,6 +674,7 @@ app.post('/wco/coupon_distribute', async (req, res) => {
           <br/>
           <div style="text-align:center;">
             <h2>${title}</h2>
+            ${date && `Date of event: <h5>${date}</h5>`}
             <img src="cid:qrcode" alt="Coupon QR Code" style="max-width: 250px; margin-top: 10px;"/>
           </div>
           <p>请至提供商处出示此码并告知您是来自WTC Elite Club和WCO的联合会员，他们会帮助您进行核销。如果有任何问题，欢迎随时联系我们！</p>

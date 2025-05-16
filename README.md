@@ -150,6 +150,8 @@ POST https://mail-service.do360.com/1club/coupon_distribute
   "title": "This is a Coupon's Title"
 }'
 ```
+**Note**:
+WCO's distribution API got a optional field "date" for booking event.
 **Response**:
 As usual, 200 for OK and MEHHHH otherwise...
 
