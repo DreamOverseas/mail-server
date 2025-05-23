@@ -17,6 +17,7 @@ const allowedOrigins = [
   'https://1club.world',
   'https://roseneathholidaypark.au',
   'https://coupon.do360.com',
+  'https://server.coupon.do360.com',
   'https://missinternational.world',
   'https://world-cooperation.org',
 ];
@@ -651,6 +652,11 @@ app.post('/1club/coupon_distribute', async (req, res) => {
  * API handling Sending Coupon QR to the Client, with date of event specified [WCO]
 */
 app.post('/wco/coupon_distribute', servs.wco_coupon_distribute);
+
+/**
+ * API handling Sending NotificaTION FOR POINT DEDUCTION THRU Member-Direct  [Membership]
+*/
+app.post('/member_direct_notify', servs.member_direct_notify);
 
 
 // Up n Listen
