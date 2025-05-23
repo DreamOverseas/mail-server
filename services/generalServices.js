@@ -17,8 +17,7 @@ async function member_direct_notify(req, res) {
           <br/>
           <p>您刚才于${account}处通过会员码扫描识别消费了${point}会员点，其中${discount}通过折扣点数抵扣。</p> 
           ${info &&
-          <><br/>
-          <strong>${info}</strong></>
+          `<strong><br/>${info}</strong>`
         }
           <br/>
           <p>如果有任何问题，欢迎随时联系我们！</p>
