@@ -1,7 +1,7 @@
 const sender_DO = require('../config/transporter').transporter_send_do;
 
 async function member_direct_notify(req, res) {
-  const { name, account, email, point, discount } = req.body; 
+  const { name, account, email, point, discount, info } = req.body; 
 
   if (!name || !account || !email || !point || !discount) {
     return res.status(400).json({ error: 'Missing required fields.' });
@@ -9,13 +9,17 @@ async function member_direct_notify(req, res) {
 
   try {
       const userMailOptions = {
-        from: 'WTC Elite Club x WCO <melbourne@do360.com>',
+        from: `${account} Team <melbourne@do360.com>`,
         to: email,
-        subject: '这是您的兑换券，请查收 / Your coupon from WTC & WCO',
+        subject: `${account} Membership-Direct 会员点数消费通知`,
         html: `
           <p><strong>${name}</strong> 您好：</p>
           <br/>
           <p>您刚才于${account}处通过会员码扫描识别消费了${point}会员点，其中${discount}通过折扣点数抵扣。</p> 
+          ${info &&
+          <><br/>
+          <strong>${info}</strong></>
+        }
           <br/>
           <p>如果有任何问题，欢迎随时联系我们！</p>
           <br/>

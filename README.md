@@ -174,7 +174,8 @@ POST https://mail-service.do360.com/member-direct-notify
   "email": "bananas@example.com",
   "account": "WCO",
   "point": 255,
-  "discount": 240
+  "discount": 240,
+  "info": "One day rental of Tiny House"
 }'
 ```
 **Response**:
