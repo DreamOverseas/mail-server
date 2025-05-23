@@ -656,7 +656,7 @@ app.post('/wco/coupon_distribute', servs.wco_coupon_distribute);
 /**
  * API handling Sending NotificaTION FOR POINT DEDUCTION THRU Member-Direct  [Membership]
 */
-app.post('/member_direct_notify', servs.member_direct_notify);
+app.post('/member-direct-notify', servs.member_direct_notify);
 
 
 // Up n Listen
@@ -664,5 +664,5 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// ====== Written By Hanny, L.E.21/05/2025 ====== //
+// ====== Written By Hanny, L.E.23/05/2025 ====== //
 // ==== Securely handling auto-mailing servers for more than 300 days ==== //

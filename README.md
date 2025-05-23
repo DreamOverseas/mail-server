@@ -130,7 +130,7 @@ POST https://mail-service.do360.com/360media/merchant-upload-notify
 As usual, 200 for OK and MEHHHH otherwise...
 
 #### 9. Coupon distribution API set [Tencent_SMTP]
-Receives coupon code, and generate QR code then send as attatchment to the user's email given in request. Currently supported 1# Club and RHP. \
+Receives coupon code, and generate QR code then send as attatchment to the user's email given in request. Currently supported 1# Club, RHP and WCOxWTC. \
 **Example HTTP Request**:
 ```bash
 POST https://mail-service.do360.com/roseneathpark/coupon_distribute
@@ -150,12 +150,37 @@ POST https://mail-service.do360.com/1club/coupon_distribute
   "title": "This is a Coupon's Title"
 }'
 ```
+```bash
+POST https://mail-service.do360.com/wco/coupon_distribute
+  -H "Content-Type: application/json" -d '{
+  "name": "Banana McTester",
+  "email": "bananas@example.com",
+  "data": "1a2b3c4d5f6e7788g",
+  "title": "This is a Coupon's Title"
+}'
+```
 **Note**:
 WCO's distribution API got a optional field "date" for booking event.
 **Response**:
 As usual, 200 for OK and MEHHHH otherwise...
 
-#### 10. Coming Soon...
+#### 10. Coupon Sys - MemberDirect point deduction notification [Tencent_SMTP]
+API handling Sending NotificaTION FOR POINT DEDUCTION THRU Member-Direct \
+**Example HTTP Request**:
+```bash
+POST https://mail-service.do360.com/member-direct-notify
+  -H "Content-Type: application/json" -d '{
+  "name": "Banana McTester",
+  "email": "bananas@example.com",
+  "account": "WCO",
+  "point": 255,
+  "discount": 240
+}'
+```
+**Response**:
+As usual, 200 for OK and MEHHHH otherwise...
+
+#### 11. Coming Soon...
 
 ### Testing the API
 You can test the API endpoint using tools like Postman or cURL.
