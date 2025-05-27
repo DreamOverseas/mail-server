@@ -654,6 +654,11 @@ app.post('/1club/coupon_distribute', async (req, res) => {
 app.post('/wco/coupon_distribute', servs.wco_coupon_distribute);
 
 /**
+ * API handling sending Event-entry QR code to the given email, with date of event, contact, map img.. as needed [WCO]
+*/
+app.post('/wco/event_distribute', servs.wco_event_distribute);
+
+/**
  * API handling Sending NotificaTION FOR POINT DEDUCTION THRU Member-Direct  [Membership]
 */
 app.post('/member-direct-notify', servs.member_direct_notify);
