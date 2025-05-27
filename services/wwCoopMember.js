@@ -108,7 +108,7 @@ async function wco_event_distribute(req, res) {
           <br/>
           <p style="margin-top: 20px;">敬祝安康,<br>
           <strong>WTC Elite Club x WCO Team</strong></p>
-          <p style="margin-left: 1em;">
+          <p>
             朱联人- Ph: 0419 168 811<br/>
             Thomas - Ph: 0402 898 260
           </p>
