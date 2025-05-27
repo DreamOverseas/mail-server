@@ -76,7 +76,7 @@ async function wco_event_distribute(req, res) {
   try {
     QRCode.toDataURL(data, (err, qrCodeDataUrl) => {
       if (err) {
-        console.error('[wco/coupon_distribute] Error generating QR code:', err);
+        console.error('[wco/event_distribute] Error generating QR code:', err);
         return res.status(500).json({ error: 'Failed to generate QR code.' });
       }
 
@@ -89,7 +89,7 @@ async function wco_event_distribute(req, res) {
         subject: '这是您的入场券，请查收 / Your Admission Ticket from WTC & WCO',
         html: `
           <p><strong>${name}</strong> 您好,</p>
-          <p>感谢您的预约，这是您的入场券：</p> 
+          <p>感谢您对本次活动的支持与确认, 请凭此二维码参加活动及入场：</p> 
           <br/>
           <div style="text-align:center;">
             <h2>${title}</h2>
@@ -104,16 +104,14 @@ async function wco_event_distribute(req, res) {
           </p>
           ${(date != undefined && date != '') ? `<p>⌚ <b>活动日期 / Date of Event:</b> ${ISO2Date(date)}</p>` : ''}
           <br/>
-          <p>📞 <b>联系方式 / Contact Info：</b></p>
-          <p style="margin-left: 1em;">
-            杜群（0413 168 533）<br/>
-            朱联人（0419 168 811）
-          </p>
-          <br/>
-          <p>请您于预约时间前往活动地点，我们会帮助您进行入场检券。如有任何问题，欢迎随时联系我们！</p>
+          <p>请您于预约时间至世贸中心(见地址与下方地图)，我们会帮助您进行入场检券。如有任何问题，欢迎随时联系我们！</p>
           <br/>
           <p style="margin-top: 20px;">敬祝安康,<br>
           <strong>WTC Elite Club x WCO Team</strong></p>
+          <p style="margin-left: 1em;">
+            朱联人- Ph: 0419 168 811<br/>
+            Thomas - Ph: 0402 898 260
+          </p>
           <p style="font-size: 12px; color: #888888; text-align: center;">*此邮件为自动发送，请勿回复</p>
           <div style="text-align:center; margin-top: 30px;">
             <img src="cid:gmap" alt="WTC Location Map" style="max-width: 100%; height: auto;" />
@@ -136,17 +134,17 @@ async function wco_event_distribute(req, res) {
 
       sender_DO.sendMail(userMailOptions, (error, info) => {
         if (error) {
-          console.error('[wco/coupon_distribute] Error sending email:', error);
+          console.error('[wco/event_distribute] Error sending email:', error);
           return res.status(500).json({ error: "Failed to send user's email." });
         }
-        console.log('[wco/coupon_distribute] Client Email sent successfully:', info.response);
+        console.log('[wco/event_distribute] Client Email sent successfully:', info.response);
       });
 
       res.status(200).json({ message: 'Notification sent successfully!' });
     });
 
   } catch (error) {
-    console.error('[wco/coupon_distribute] Unexpected Error:', error);
+    console.error('[wco/event_distribute] Unexpected Error:', error);
     res.status(500).json({ error: 'Unexpected server error.' });
   }
 }
