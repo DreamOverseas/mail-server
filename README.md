@@ -10,7 +10,7 @@ This Service API Collection allows users to achieve a series of email-related op
 
 ### Usage / API List
 
-#### 1. Submitting an Email to subscription [MailChimp]
+#### 1. Submitting an Email to subscription - `/subscribe/360media-contact`
 Users can submit their email through the form on the frontend. The email, name and message(optional) to backend, then subscribe user to the audience. \
 **Example HTTP Request**:
 ```bash
@@ -27,18 +27,20 @@ POST https://mail-service.do360.com/subscribe/360media-contact
 - Success: `{"message":"Successfully subscribed"}`
 - Error: `{"error":"Some error message"}`
 
-#### 2. Quickly Submitting an Email to subscription [MailChimp]
+#### 2. Quickly Submitting an Email to subscription - `/subscribe/quick-subscription`
 Users can submit their email through the form on the frontend. The email will be sent to the backend, which processes the subscription request with Mailchimp. You will also need to specify the source where it comes from, forexample, if it's from 36O Media, then the "source" fdield should be something like "36O Media". \
 **Example HTTP Request**:
 ```bash
-POST https://mail-service.do360.com/subscribe/quick-subscription -H "Content-Type: application/json" -d '{"email":"test@example.com", "source":"Sample.org"}'
+POST https://mail-service.do360.com/subscribe/quick-subscription 
+-H "Content-Type: application/json" 
+-d '{"email":"test@example.com", "source":"Sample.org"}'
 ```
 **Response**:
 - Success: `{"message":"Successfully subscribed"}`
 - Error: `{"error":"Some error message"}`
 > ~~Note: These will mightly be merged if more platforms are coming up~~ Merged Nov 27 2024
 
-#### 3. Comfirmation Email [Tencent_SMTP]
+#### 3. Comfirmation Email - `/missinternational/register-confirmation`
 After Submitting the register form and call this API, an email will be send to the miss and also a notifying email to manager. \
 **Example HTTP Request**:
 ```bash
@@ -52,7 +54,7 @@ POST https://mail-service.do360.com/missinternational/register-confirmation
 - Success: `{"message":"邮件发送成功"}`
 - Error: `{"error":"邮件发送失败"}`
 
-#### 4. Roseneath Park Enquiry Email Services [Tencent_SMTP]
+#### 4. Roseneath Park Enquiry Email Services - `/roseneathpark/contact/`
 After Submitting the contact us form and call this API, an email will be send to the Costomer Service email address in .env with questions;
 And send notification Email to the enquiree. \
 **Example HTTP Request**:
@@ -70,7 +72,7 @@ POST https://mail-service.do360.com/roseneathpark/contact/
 **Response**:
 As usual, 200 for OK and meh otherwise...
 
-#### 5. 1# Club Enquiry Email Services [Tencent_SMTP]
+#### 5. 1# Club Enquiry Email Services - `/1club/enquiry/`
 After Submitting the contact us form and call this API, an email will be send to the Costomer Service email address in .env with questions;
 And send notification Email to the enquiree. \
 **Example HTTP Request**:
@@ -87,7 +89,7 @@ POST https://mail-service.do360.com/1club/enquiry/
 **Response**:
 As usual, 200 for OK and meh otherwise...
 
-#### 6. 1# Club Membership Application Email Services [Tencent_SMTP]
+#### 6. 1# Club Membership Application Email Services - `/1club/membership-notify`
 After Submitting the membership application form and call this API, an email will be send to the Costomer Service email address in .env for notification;
 And send notification Email to the applicant. \
 **Example HTTP Request**:
@@ -101,7 +103,7 @@ POST https://mail-service.do360.com/1club/membership-notify
 **Response**:
 As usual, 200 for OK and meh otherwise...
 
-#### 7. 360Media mechant uploading received notification [Tencent_SMTP]
+#### 7. 360Media mechant uploading received notification - `/360media/merchant-upload-notify`
 After mechants submitting the form from 360Media, call this API. This will send a notification to the mechant's submitted email, as well as the manager's email. \
 **Example HTTP Request**:
 ```bash
@@ -115,11 +117,11 @@ POST https://mail-service.do360.com/360media/merchant-upload-notify
 **Response**:
 As usual, 200 for OK and MEHHHH otherwise...
 
-#### 8. All-platform registration email verification code sending [Tencent_SMTP]
+#### 8. All-platform registration email verification code sending - `/do-mail-code-verify`
 Could be called when new user registered for our platform. This will send the verification code with everything specified. Note that comparason should be done in the frontend.\
 **Example HTTP Request**:
 ```bash
-POST https://mail-service.do360.com/360media/merchant-upload-notify
+POST https://mail-service.do360.com/do-mail-code-verify
   -H "Content-Type: application/json" -d '{
   "from": "Media 360",
   "verify_code": "123456",
@@ -129,7 +131,7 @@ POST https://mail-service.do360.com/360media/merchant-upload-notify
 **Response**:
 As usual, 200 for OK and MEHHHH otherwise...
 
-#### 9. Coupon distribution API set [Tencent_SMTP]
+#### 9. Coupon distribution API set - `/<business>/coupon_distribute`
 Receives coupon code, and generate QR code then send as attatchment to the user's email given in request. Currently supported 1# Club, RHP and WCOxWTC. \
 **Example HTTP Request**:
 ```bash
@@ -156,6 +158,7 @@ POST https://mail-service.do360.com/wco/coupon_distribute
   "name": "Banana McTester",
   "email": "bananas@example.com",
   "data": "1a2b3c4d5f6e7788g",
+  "date": <some ISO formatted datetime string>,
   "title": "This is a Coupon's Title"
 }'
 ```
@@ -164,8 +167,24 @@ WCO's distribution API got a optional field "date" for booking event.
 **Response**:
 As usual, 200 for OK and MEHHHH otherwise...
 
-#### 10. Coupon Sys - MemberDirect point deduction notification [Tencent_SMTP]
-API handling Sending NotificaTION FOR POINT DEDUCTION THRU Member-Direct \
+#### 10. WCO Event QR distribution + additional info - `/wco/event_distribute`
+API handling sending notification and QR code for event puchased by client \
+**Example HTTP Request**:
+```bash
+POST https://mail-service.do360.com/wco/event_distribute
+  -H "Content-Type: application/json" -d '{
+  "name": "Banana McTester",
+  "email": "bananas@example.com",
+  "data": "1a2b3c4d5f6e7788g",
+  "date": <some ISO formatted datetime string>,
+  "title": "This is a Event's Title"
+}'
+```
+**Response**:
+As usual, 200 for OK and MEHHHH otherwise...
+
+#### 11. Coupon Sys - MemberDirect point deduction notification - `/member-direct-notify`
+API handling Sending Notification FOR POINT DEDUCTION THRU Member-Direct \
 **Example HTTP Request**:
 ```bash
 POST https://mail-service.do360.com/member-direct-notify
@@ -181,7 +200,7 @@ POST https://mail-service.do360.com/member-direct-notify
 **Response**:
 As usual, 200 for OK and MEHHHH otherwise...
 
-#### 11. Coming Soon...
+#### 12. Coming Soon...
 
 ### Testing the API
 You can test the API endpoint using tools like Postman or cURL.
@@ -193,4 +212,4 @@ curl -X POST https://mail-service.do360.com/subscribe -H "Content-Type: applicat
 
 ## Reference
 Author: Hanny Zhang \
-Last Edit: 11:52-AEDT 16/04/2025
+Last Edit: 11:52-AEDT 27/05/2025
