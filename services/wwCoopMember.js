@@ -159,7 +159,7 @@ async function wco_member_notification(req, res) {
   try {
     QRCode.toDataURL(pass_link, (err, qrCodeDataUrl) => {
       if (err) {
-        console.error('[wco/coupon_distribute] Error generating QR code:', err);
+        console.error('[wco/member_distribute] Error generating QR code:', err);
         return res.status(500).json({ error: 'Failed to generate QR code.' });
       }
 
@@ -243,17 +243,17 @@ async function wco_member_notification(req, res) {
 
       sender_DO.sendMail(userMailOptions, (error, info) => {
         if (error) {
-          console.error('[wco/coupon_distribute] Error sending email:', error);
+          console.error('[wco/member_distribute] Error sending email:', error);
           return res.status(500).json({ error: "Failed to send user's email." });
         }
-        console.log('[wco/coupon_distribute] Client Email sent successfully:', info.response);
+        console.log('[wco/member_distribute] Client Email sent successfully:', info.response);
       });
 
       res.status(200).json({ message: 'Notification sent successfully!' });
     });
 
   } catch (error) {
-    console.error('[wco/coupon_distribute] Unexpected Error:', error);
+    console.error('[wco/member_distribute] Unexpected Error:', error);
     res.status(500).json({ error: 'Unexpected server error.' });
   }
 }

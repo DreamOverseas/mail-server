@@ -48,6 +48,9 @@ const servs = loadServices('services');
 const sender_DO = require('./config/transporter').transporter_send_do;
 //const sender_1club = require('./config/transporter').transporter_send_1club;
 
+
+// ================== All entries are registered here =====================
+
 /**
  * API handling email code verification for registration
  * to start, run ``` node index.js ``` from root
@@ -119,15 +122,19 @@ app.post('/wco/event_distribute', servs.wco_event_distribute);
 app.post('/member-direct-notify', servs.member_direct_notify);
 
 /**
- * API handling Sending NotificaTION FOR POINT DEDUCTION THRU Member-Direct  [Membership]
+ * API handling Sending Notification for new activated WW member [Membership]
 */
 app.post('/wco/member-notification', servs.wco_member_notification);
 
+/**
+ * API handling Sending Notification for new activated 1Club member [Membership]
+*/
+app.post('/1club/member-notification', servs.one_club_member_notification);
 
 // Up n Listen
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// ====== Written By Hanny, L.E.27/05/2025 ====== //
+// ====== Written By Hanny, L.E.05/06/2025 ====== //
 // ==== Effectively handling auto-mailing services for more than 300 days ==== //
