@@ -1,18 +1,21 @@
+
 const fs = require('fs');
 const path = require('path');
 
 function loadServices(dirPath) {
   const services = {};
-
   const absoluteDir = path.resolve(__dirname, '../', dirPath);
   const files = fs.readdirSync(absoluteDir);
 
   files.forEach(file => {
-    if (file.endsWith('.js')) {
-      const modulePath = path.join(absoluteDir, file);
-      const moduleExports = require(modulePath);
+    const fullPath = path.join(absoluteDir, file);
+    const stat = fs.statSync(fullPath);
 
-      // Merge all named exports into `services`
+    if (stat.isDirectory()) {
+      // 递归子目录
+      Object.assign(services, loadServices(path.join(dirPath, file)));
+    } else if (file.endsWith('.js')) {
+      const moduleExports = require(fullPath);
       Object.assign(services, moduleExports);
     }
   });

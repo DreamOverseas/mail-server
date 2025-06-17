@@ -9,6 +9,7 @@ const loadServices = require('./controllers/ServicesController');
 const allowedOrigins = [
   'http://localhost:3000', // TODO: Del
   'http://localhost:3001', // TODO: Del
+  'http://localhost:3002',
   'http://localhost:3053', // TODO: Del
   'http://localhost:3003', // TODO: Del
   'http://localhost:5173', // TODO: Del
@@ -69,8 +70,11 @@ app.post('/360media/merchant-upload-notify', servs.merchant_upload_notify);
  */
 app.post('/subscribe/360media-contact', servs.media360_contact);
 
-
-app.post('/media360/partner-apply-notify', servs.partner_apply_notify);
+/**
+ * API handling subscription for 360 Media website from join-us-form page
+ * to start, run ``` node index.js ``` from root
+ */
+app.post('/360media/partner-apply-notify', servs.partner_apply_notify);
 
 /**
  * API handling quick subscriptions form different sources like 360 Media / 1club website subscriptions

@@ -1,21 +1,28 @@
-// services/partnerApplyService.js
+// services/partnerNotifyServices.js
 
 const sender_DO = require('../../config/transporter').transporter_send_do;
-const { formatName } = require('../../src/util');
 const manager_email = process.env.MANAGER_EMAIL;
 
 // 1. 合作伙伴申请邮件通知
 async function partner_apply_notify(req, res) {
-  const { email, productName, companyName } = req.body;
+  const {
+    companyName,
+    Phone,
+    Email,
+    Notes,
+    abnNumber,
+    companyUrlLink,
+    productName
+  } = req.body;
 
-  if (!email || !productName || !companyName) {
-    return res.status(400).json({ error: '必填项未填写 (email, 姓名, 产品名, 公司名)' });
+  if (!Email || !productName || !companyName) {
+    return res.status(400).json({ error: '必填项未填写 (email, 产品名, 公司名)' });
   }
 
-  // 发给用户的内容
+  // 发给用户的内容（保持你原本的内容）
   const mailOptions_user = {
     from: '360 Media - 360传媒 <melbourne@do360.com>',
-    to: email,
+    to: Email,
     subject: '合作伙伴申请已收到',
     html: `
       <p>尊敬的 <b>${companyName}</b>代表，</p>
@@ -30,7 +37,7 @@ async function partner_apply_notify(req, res) {
     `
   };
 
-  // 发给管理员的内容
+  // 发给管理员的内容（保持你原本的内容）
   const mailOptions_manager = {
     from: '360 Media - 360传媒 <melbourne@do360.com>',
     to: manager_email,
