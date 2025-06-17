@@ -69,6 +69,9 @@ app.post('/360media/merchant-upload-notify', servs.merchant_upload_notify);
  */
 app.post('/subscribe/360media-contact', servs.media360_contact);
 
+
+app.post('/media360/partner-apply-notify', servs.partner_apply_notify);
+
 /**
  * API handling quick subscriptions form different sources like 360 Media / 1club website subscriptions
  * to start, run ``` node index.js ``` from root
