@@ -71,17 +71,17 @@ app.post('/360media/merchant-upload-notify', servs.merchant_upload_notify);
 app.post('/subscribe/360media-contact', servs.media360_contact);
 
 /**
- * API handling subscription for 360 Media website from join-us-form page
+ * API handling subscription for 360 Media website from PartnerApplicationForm page
  * to start, run ``` node index.js ``` from root
  */
-app.post('/360media/partner-apply-notify', servs.partner_apply_notify);
+app.post('/360media/Partner_Application_Form_Notification', servs.Partner_Application_Form_Notification);
 
 
 /**
  * API handling subscription for 360 Media website from partner-application-form page
  * to start, run ``` node index.js ``` from root
  */
-app.post('/360media/partner-apply-notifyyy', servs.partner_apply_notifyyy);
+app.post('/360media/Customer_Application_Form_Notification', servs.Customer_Application_Form_Notification);
 
 
 /**

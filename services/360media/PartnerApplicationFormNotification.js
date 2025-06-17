@@ -4,7 +4,7 @@ const sender_DO = require('../../config/transporter').transporter_send_do;
 const manager_email = process.env.MANAGER_EMAIL;
 
 // 1. 合作伙伴申请邮件通知
-async function partner_apply_notify(req, res) {
+async function Partner_Application_Form_Notification(req, res) {
   const {
     companyName,
     Phone,
@@ -71,4 +71,4 @@ async function partner_apply_notify(req, res) {
   });
 }
 
-module.exports = { partner_apply_notify };
+module.exports = { Partner_Application_Form_Notification };

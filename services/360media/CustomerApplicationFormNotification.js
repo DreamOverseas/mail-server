@@ -1,7 +1,7 @@
 const sender_DO = require('../../config/transporter').transporter_send_do;
 const manager_email = process.env.MANAGER_EMAIL;
 
-async function partner_apply_notifyyy(req, res) {
+async function Customer_Application_Form_Notification(req, res) {
   const {
     Name, Email, isInAustralia, partnerID, productName, documentId, companyName,
     // 可以加更多字段
@@ -45,4 +45,4 @@ async function partner_apply_notifyyy(req, res) {
   });
 }
 
-module.exports = { partner_apply_notifyyy };
+module.exports = { Customer_Application_Form_Notification };
