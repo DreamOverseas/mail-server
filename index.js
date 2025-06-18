@@ -5,6 +5,7 @@ const cors = require('cors');
 const QRCode = require('qrcode');
 require('dotenv').config();
 const loadServices = require('./controllers/ServicesController');
+const path = require('path');
 
 const allowedOrigins = [
   'http://localhost:3000', // TODO: Del
@@ -42,6 +43,8 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
+
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 const servs = loadServices('services');
 
