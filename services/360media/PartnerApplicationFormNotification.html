@@ -36,7 +36,7 @@
     .divider {
       height: 4px;
       background-color: orange;
-      width: 120px;
+      width: 360px;
       margin: 10px auto 30px;
       border-radius: 3px;
     }
@@ -56,13 +56,39 @@
       border-top: 1px solid #eee;
       padding-top: 15px;
     }
+    .social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0; /* 我们用 margin-right 控制间距 */
+    margin-top: 10px;
+    }
+
+    .social-icons img {
+    height: 30px;
+    width: 60px;
+    margin-right: 8px;
+    object-fit: contain;
+    }
+
+    .social-icons img:last-child {
+    margin-right: 0; /* 最后一个图标不加 margin-right */
+    }
+
+    .email-body {
+    padding: 30px 20px;
+    padding-left: 80px; /* 👈 新增这一行或增大这个值 */
+    font-size: 16px;
+    color: #333;
+    line-height: 1.7;
+    }
   </style>
 </head>
 <body>
   <div class="email-container">
     <!-- logo + 分割线 -->
     <div class="logo-box">
-       <img src="http://localhost:3002/public/360media/roseneath.png" alt="品牌 Logo" class="logo" />
+       <img src="{{logoUrl}}" alt="品牌 Logo" class="logo" />
     </div>
 
     <div class="divider"></div>
@@ -74,13 +100,33 @@
       <p>我们的团队会尽快审核您的信息，并通过邮件与您联系后续合作事宜。</p>
       <p>如果您有任何问题，欢迎通过邮件联系我们。</p>
       <p>再次感谢您的关注与信任！</p>
-      <p>此致<br>360传媒团队</p>
+      <br>
+      <br>
+      <br>
+      <p>360传媒团队提供支持</p>
     </div>
+
+    <!-- 正文 -->
+
+    <div class="divider"></div>
+    <p class="email-body">有关最新信息，请在社交媒体上关注我们</p>
+
+    <div class="social-icons">
+    <a href="{{bilibiliUrl}}" target="_blank">
+        <img src="http://localhost:3002/public/icons/bilibili.png" alt="Bilibili" />
+    </a>
+    <a href="{{xiaohongshuUrl}}" target="_blank">
+        <img src="http://localhost:3002/public/icons/red_note.png" alt="Red Note" />
+    </a>
+    </div>
+
+
+
+    <div class="divider"></div>
 
     <!-- 页脚 -->
     <div class="email-footer">
-      Dream Overseas Group Pty Ltd | <a href="https://www.studyfin.com.au" target="_blank" style="color: #888; text-decoration: none;">www.studyfin.com.au</a><br />
-      Melbourne | Sydney | Silicon Valley | Singapore
+      Dream Overseas Group Pty Ltd | <a href="https://www.do360.com" target="_blank" style="color: #888; text-decoration: none;">www.do360.com</a><br />
     </div>
   </div>
 </body>

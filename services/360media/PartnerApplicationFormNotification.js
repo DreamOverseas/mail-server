@@ -29,17 +29,38 @@ async function Partner_Application_Form_Notification(req, res) {
     '罗塞尼斯半岛度假村': 'roseneath.png',
   };
 
+  const xiaohongshuMap = {
+  'Studyfin': 'https://www.xiaohongshu.com/user/profile/5fc6e9140000000001008c09',
+  'AI美甲': 'https://www.xiaohongshu.com/user/profile/5fc6e9140000000001008c09',
+  '罗塞尼斯半岛度假村': 'https://www.xiaohongshu.com/user/profile/5fc6e9140000000001008c09',
+  // ... 可继续添加其他品牌
+  };
+
+  // fallback 默认链接（如有需要你可以自定义）
+  const xiaohongshuUrl = xiaohongshuMap[productName] || 'https://www.xiaohongshu.com/user/profile/5fc6e9140000000001008c09';
+
+  const bilibiliMap = {
+  'Studyfin': 'https://space.bilibili.com/3546717257468817',
+  'AI美甲': 'https://space.bilibili.com/3546717257468817',
+  '罗塞尼斯半岛度假村': 'https://space.bilibili.com/3546717257468817',
+  // ... 可继续添加更多品牌
+  };
+
+  const bilibiliUrl = bilibiliMap[productName] || 'https://space.bilibili.com/3546717257468817';
+
   // ✅ 找到 logo 文件名
-  const logoFileName = logoMap[productName] || 'default.png'; // fallback 用占位图
+  const logoFileName = logoMap[productName] || '360media.png'; // fallback 用占位图
   const logoUrl = `http://localhost:3002/public/360media/${logoFileName}`;
 
   // ✅ 加载并替换 HTML 模板
-  const htmlTemplatePath = path.join(__dirname, '360media-general-template.html');
+  const htmlTemplatePath = path.join(__dirname, 'PartnerApplicationFormNotification.html');
   let htmlTemplate = fs.readFileSync(htmlTemplatePath, 'utf-8');
 
   const todayDate = new Date().toLocaleDateString('zh-CN');
 
   htmlTemplate = htmlTemplate
+    .replace(/{{bilibiliUrl}}/g, bilibiliUrl)
+    .replace(/{{xiaohongshuUrl}}/g, xiaohongshuUrl)
     .replace(/{{companyName}}/g, companyName)
     .replace(/{{brandName}}/g, productName)
     .replace(/{{Email}}/g, Email)
