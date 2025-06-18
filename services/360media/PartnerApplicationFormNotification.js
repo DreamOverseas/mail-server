@@ -1,9 +1,8 @@
-// services/partnerNotifyServices.js
-
+const fs = require('fs');
+const path = require('path');
 const sender_DO = require('../../config/transporter').transporter_send_do;
 const manager_email = process.env.MANAGER_EMAIL;
 
-// 1. 合作伙伴申请邮件通知
 async function Partner_Application_Form_Notification(req, res) {
   const {
     companyName,
@@ -19,40 +18,46 @@ async function Partner_Application_Form_Notification(req, res) {
     return res.status(400).json({ error: '必填项未填写 (email, 产品名, 公司名)' });
   }
 
-  // 发给用户的内容（保持你原本的内容）
+  // ===== [1] 读取并替换模板内容 =====
+  const templatePath = path.join(__dirname, '../../services/360media/360media-general-template.html');
+  let htmlTemplate = fs.readFileSync(templatePath, 'utf-8');
+
+  // 替换模板中变量 {{companyName}} 和 {{brandName}}（brandName = productName）
+  htmlTemplate = htmlTemplate
+    .replace(/{{companyName}}/g, companyName)
+    .replace(/{{brandName}}/g, productName);
+
+  // ===== [2] 用户邮件内容（使用模板） =====
   const mailOptions_user = {
     from: '360 Media - 360传媒 <melbourne@do360.com>',
     to: Email,
-    subject: '合作伙伴申请已收到',
-    html: `
-      <p>尊敬的 <b>${companyName}</b>代表，</p>
-      <p>感谢贵公司申请成为 <b>${productName}</b> 的合作伙伴（公司：${companyName}）。</p>
-      <p>我们已收到您的申请，会尽快与您联系。</p>
-      <br />
-      <p>Thank you for applying as a partner for <b>${productName}</b> (Company: ${companyName}).</p>
-      <p>We have received your application and will get back to you soon.</p>
-      <br>
-      <p>Best regards,<br>360 Media 团队</p>
-      <br><p style="font-size: 12px; color: #888888; text-align: center;">*此邮件为自动发送，请勿直接回复。</p>
-    `
+    subject: `感谢申请加入 ${productName} 合作伙伴计划`,
+    html: htmlTemplate
   };
 
-  // 发给管理员的内容（保持你原本的内容）
+  // ===== [3] 管理员通知邮件内容（保持原样） =====
   const mailOptions_manager = {
     from: '360 Media - 360传媒 <melbourne@do360.com>',
     to: manager_email,
     subject: '【新合作伙伴申请】',
     html: `
       <p>新合作伙伴申请！</p>
-      产品: ${productName}<br>
-      公司: ${companyName}</p>
+      <p>
+        产品: ${productName}<br>
+        公司: ${companyName}<br>
+        电话: ${Phone || '未填写'}<br>
+        邮箱: ${Email}<br>
+        ABN: ${abnNumber || '无'}<br>
+        公司链接: ${companyUrlLink || '无'}<br>
+        备注: ${Notes || '无'}
+      </p>
       <br>
       <p>请尽快审核处理。</p>
       <br><p style="font-size: 12px; color: #888888; text-align: center;">*此邮件为自动发送，请勿直接回复。</p>
     `
   };
 
-  // 先发用户，再发管理员
+  // ===== [4] 顺序发送：先用户，后管理员 =====
   sender_DO.sendMail(mailOptions_user, (error, info) => {
     if (error) {
       console.log('[partnerApply/notify] 用户邮件发送失败:', error);
