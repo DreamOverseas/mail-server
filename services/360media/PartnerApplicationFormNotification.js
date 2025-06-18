@@ -50,7 +50,8 @@ async function Partner_Application_Form_Notification(req, res) {
 
   // ✅ 找到 logo 文件名
   const logoFileName = logoMap[productName] || '360media.png'; // fallback 用占位图
-  const logoUrl = `http://localhost:3002/public/360media/${logoFileName}`;
+  const baseUrl = process.env.PUBLIC_BASE_URL || 'http://localhost:3002';
+  const logoUrl = `${baseUrl}/public/360media/${logoFileName}`;
 
   // ✅ 加载并替换 HTML 模板
   const htmlTemplatePath = path.join(__dirname, 'PartnerApplicationFormNotification.html');

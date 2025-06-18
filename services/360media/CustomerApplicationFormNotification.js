@@ -46,7 +46,8 @@ async function Customer_Application_Form_Notification(req, res) {
 
   // ✅ 找到 logo 文件名
   const logoFileName = logoMap[productName] || '360media.png'; // fallback 用占位图
-  const logoUrl = `http://localhost:3002/public/360media/${logoFileName}`;
+  const baseUrl = process.env.PUBLIC_BASE_URL || 'http://localhost:3002';
+  const logoUrl = `${baseUrl}/public/360media/${logoFileName}`;
 
   // ✅ 加载并替换 HTML 模板
   const htmlTemplatePath = path.join(__dirname, 'CustomerApplicationFormNotification.html');
@@ -57,10 +58,10 @@ async function Customer_Application_Form_Notification(req, res) {
 
   // 替换变量
   htmlTemplate = htmlTemplate
+    .replace(/{{Name}}/g, Name.replace(/</g, '&lt;').replace(/>/g, '&gt;'))
     .replace(/{{bilibiliUrl}}/g, bilibiliUrl)
     .replace(/{{xiaohongshuUrl}}/g, xiaohongshuUrl)
     .replace(/{{logoUrl}}/g, logoUrl)
-    .replace(/{{Name}}/g, Name)
     .replace(/{{brandName}}/g, productName || '合作品牌')
     .replace(/{{companyName}}/g, companyName || '')
     .replace(/{{sendDate}}/g, todayDate);
