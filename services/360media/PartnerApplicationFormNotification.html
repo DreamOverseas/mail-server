@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>感谢您的申请 - 360传媒</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      padding: 40px 20px;
+    }
+    .email-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .logo-box {
+      width: 320px;
+      height: 160px;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      margin: 0 auto 15px auto;
+    }
+    .logo {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .divider {
+      height: 4px;
+      background-color: orange;
+      width: 360px;
+      margin: 10px auto 30px;
+      border-radius: 3px;
+    }
+    .email-body {
+      padding: 30px 20px 30px 80px;
+      font-size: 16px;
+      color: #333;
+      line-height: 1.7;
+    }
+    .email-body strong {
+      color: #000;
+    }
+    .email-footer {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #888;
+      text-align: center;
+      border-top: 1px solid #eee;
+      padding-top: 15px;
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      margin-top: 10px;
+    }
+    .social-icons img {
+      height: 30px;
+      width: 60px;
+      margin-right: 8px;
+      object-fit: contain;
+    }
+    .social-icons img:last-child {
+      margin-right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="logo-box">
+      <img src="{{logoUrl}}" alt="品牌 Logo" class="logo" />
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="email-body">
+      <p>尊敬的 <strong>{{companyName}}</strong> 代表，</p>
+      <p>我们已收到您申请加入 <strong>360传媒</strong> 旗下品牌 <strong>{{brandName}}</strong> 的合作伙伴计划。</p>
+      <p>我们的团队会尽快审核您的信息，并通过邮件与您联系后续合作事宜。</p>
+      <p>如果您有任何问题，欢迎通过邮件联系我们。</p>
+      <p>再次感谢您的关注与信任！</p>
+      <br><br><br>
+      <p>360传媒团队提供支持</p>
+    </div>
+
+    <div class="divider"></div>
+    <p class="email-body">有关最新信息，请在社交媒体上关注我们</p>
+
+    <div class="social-icons">
+      <a href="{{bilibiliUrl}}" target="_blank">
+        <img src="{{bilibiliIcon}}" alt="Bilibili" />
+      </a>
+      <a href="{{xiaohongshuUrl}}" target="_blank">
+        <img src="{{xiaohongshuIcon}}" alt="Red Note" />
+      </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="email-footer">
+      Dream Overseas Group Pty Ltd |
+      <a href="https://www.do360.com" target="_blank" style="color: #888; text-decoration: none;">www.do360.com</a><br />
+    </div>
+  </div>
+</body>
+</html>
