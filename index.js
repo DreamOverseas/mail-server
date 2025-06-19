@@ -6,6 +6,7 @@ const QRCode = require('qrcode');
 require('dotenv').config();
 const loadServices = require('./controllers/ServicesController');
 const path = require('path');
+require('dotenv').config();
 
 const allowedOrigins = [
   'http://localhost:3000', // TODO: Del
