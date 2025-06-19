@@ -39,6 +39,7 @@
       width: 360px;
       margin: 10px auto 30px;
       border-radius: 3px;
+      margin-left: 10px;
     }
     .email-body strong {
       color: #000;
@@ -57,6 +58,7 @@
     align-items: center;
     gap: 0; /* 我们用 margin-right 控制间距 */
     margin-top: 10px;
+    margin-left: 40px;
     }
 
     .social-icons img {
@@ -106,14 +108,18 @@
     <div class="divider"></div>
     <p class="email-body">有关最新信息，请在社交媒体上关注我们</p>
 
-  <div class="social-icons">
-    <a href="{{bilibiliUrl}}" target="_blank">
-      <img src="{{bilibiliIcon}}" alt="Bilibili" />
-    </a>
-    <a href="{{xiaohongshuUrl}}" target="_blank">
-      <img src="{{xiaohongshuIcon}}" alt="Red Note" />
-    </a>
-  </div>
+    <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0">
+      <tr>
+        <td align="center">
+          <a href="{{bilibiliUrl}}" target="_blank">
+            <img src="{{bilibiliIcon}}" alt="Bilibili" style="height: 24px; max-height: 24px; width: auto; display: inline-block;" />
+          </a>
+          <a href="{{xiaohongshuUrl}}" target="_blank">
+            <img src="{{xiaohongshuIcon}}" alt="Red Note" style="height: 24px; max-height: 24px; width: auto; display: inline-block;" />
+          </a>
+        </td>
+      </tr>
+    </table>
 
 
 
