@@ -22,11 +22,11 @@ async function Partner_Application_Form_Notification(req, res) {
   const logoMap = {
     '1club 1号俱乐部': '1club.jpg',
     '360创新孵化园': '360InovationPark.jpg',
-    'AI美甲': 'nailTrain.png',
-    'Decode 保护收益基金': 'decode.png',
-    'Studyfin': 'studyfin.png',
-    '世贸中心全场租赁套餐（讲堂+宴会厅+饮食等）': 'wco.png',
-    '罗塞尼斯半岛度假村': 'roseneath.png',
+    'AI美甲': 'nailTrain.jpg',
+    'Decode 保护收益基金': 'decode.jpg',
+    'Studyfin': 'studyfin.jpg',
+    '世贸中心全场租赁套餐（讲堂+宴会厅+饮食等）': 'wco.jpg',
+    '罗塞尼斯半岛度假村': 'roseneath.jpg',
   };
 
   const xiaohongshuMap = {
@@ -42,7 +42,7 @@ async function Partner_Application_Form_Notification(req, res) {
   };
 
   const baseUrl = process.env.PUBLIC_BASE_URL || 'http://localhost:3002';
-  const logoFileName = logoMap[productName] || '360media.png';
+  const logoFileName = logoMap[productName] || '360media.jpg';
   const logoUrl = `${baseUrl}/public/360media/${logoFileName}`;
   const bilibiliUrl = bilibiliMap[productName] || 'https://space.bilibili.com/3546717257468817';
   const xiaohongshuUrl = xiaohongshuMap[productName] || 'https://www.xiaohongshu.com/user/profile/5fc6e9140000000001008c09';
