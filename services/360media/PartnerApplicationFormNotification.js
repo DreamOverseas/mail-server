@@ -4,6 +4,8 @@ const sender_DO = require('../../config/transporter').transporter_send_do;
 const manager_email = process.env.MANAGER_EMAIL;
 
 async function Partner_Application_Form_Notification(req, res) {
+  console.log('[mail-server] 接收到的 req.body:', req.body);
+  
   const {
     companyName,
     Phone,
@@ -12,13 +14,14 @@ async function Partner_Application_Form_Notification(req, res) {
     abnNumber,
     companyUrlLink,
     productName,
+    cityLocation,        // ✅ 新增字段
+    experienceYears,     // ✅ 新增字段
   } = req.body;
 
   if (!Email || !productName || !companyName) {
     return res.status(400).json({ error: '必填项未填写 (email, 产品名, 公司名)' });
   }
 
-  // ✅ 品牌名 → logo 文件映射
   const logoMap = {
     '1club 1号俱乐部': '1club.jpg',
     '360创新孵化园': '360InovationPark.jpg',
@@ -55,7 +58,6 @@ async function Partner_Application_Form_Notification(req, res) {
 
   const todayDate = new Date().toLocaleDateString('zh-CN');
 
-  // ✅ 模板变量替换函数（与 Customer 版本统一）
   function replaceTemplateVars(template, vars) {
     return Object.entries(vars).reduce((acc, [key, value]) => {
       const safeValue = typeof value === 'string' ? value.replace(/</g, '&lt;').replace(/>/g, '&gt;') : value;
@@ -82,22 +84,26 @@ async function Partner_Application_Form_Notification(req, res) {
     html: htmlContent,
   };
 
-  const mailOptions_manager = {
-    from: '360 Media - 360传媒 <melbourne@do360.com>',
-    to: manager_email,
-    subject: '【新合作伙伴申请】',
-    html: `
-      <p>新合作伙伴申请！</p>
-      <p>产品: ${productName}</p>
-      <p>公司名称: ${companyName}</p>
-      <p>ABN: ${abnNumber || '未填写'}</p>
-      <p>电话: ${Phone || '未填写'}</p>
-      <p>备注: ${Notes || '无备注'}</p>
-      <br>
-      <p>请尽快审核处理。</p>
-      <p style="font-size: 12px; color: #888888; text-align: center;">*此邮件为自动发送，请勿直接回复。</p>
-    `,
-  };
+const mailOptions_manager = {
+  from: '360 Media - 360传媒 <melbourne@do360.com>',
+  to: manager_email,
+  subject: '【新合作伙伴申请】',
+  html: `
+    <p>新合作伙伴申请！</p>
+    <p><strong>产品：</strong> ${productName}</p>
+    <p><strong>公司名称：</strong> ${companyName}</p>
+    <p><strong>ABN：</strong> ${abnNumber || '未填写'}</p>
+    <p><strong>电话：</strong> ${Phone || '未填写'}</p>
+    <p><strong>邮箱：</strong> ${Email || '未填写'}</p>
+    <p><strong>公司网站：</strong> ${companyUrlLink || '未填写'}</p>
+    <p><strong>公司地址：</strong> ${cityLocation || '未填写'}</p>
+    <p><strong>从业经验：</strong> ${experienceYears || '未填写'}</p>
+    <p><strong>备注：</strong> ${Notes || '无备注'}</p>
+    <br>
+    <p>请尽快审核处理。</p>
+    <p style="font-size: 12px; color: #888888; text-align: center;">*此邮件为自动发送，请勿直接回复。</p>
+  `,
+};
 
   sender_DO.sendMail(mailOptions_user, (error, info) => {
     if (error) {
