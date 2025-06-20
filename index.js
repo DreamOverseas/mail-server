@@ -150,10 +150,15 @@ app.post('/wco/member-notification', servs.wco_member_notification);
 */
 app.post('/1club/member-notification', servs.one_club_member_notification);
 
+/**
+ * API that sent an email template to destination email.
+*/
+app.post('/example/email-template', servs.example_email_template);
+
 // Up n Listen
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// ====== Written By Hanny, L.E.05/06/2025 ====== //
+// ====== Written By Hanny, L.E.20/06/2025 ====== //
 // ==== Effectively handling auto-mailing services for more than 300 days ==== //
