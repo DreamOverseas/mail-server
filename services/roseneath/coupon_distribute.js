@@ -58,7 +58,7 @@ async function rhp_coupon_distribute(req, res) {
     <a href="https://space.bilibili.com/3546823025232653" target="_blank" style="display: inline-block; margin: 0 10px;">
     <img src="cid:bilibili" alt="Bilibili" style="width: 32px; height: 32px;" />
     </a>
-    <a href="https://www.youtube.com/@360Media-e8x" target="_blank" style="display: inline-block; margin: 0 10px;">
+    <a href="https://www.youtube.com/channel/UC3GSuPpt3tClvoFp0l_nkCg" target="_blank" style="display: inline-block; margin: 0 10px;">
     <img src="cid:youtube" alt="Youtube" style="width: 32px; height: 32px;" />
     </a>
     <a href="http://weixin.qq.com/r/mp/pBFRSX-EDCJzrTsq90S2" target="_blank" style="display: inline-block; margin: 0 10px;">
