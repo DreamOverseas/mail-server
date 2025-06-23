@@ -52,6 +52,25 @@ async function rhp_coupon_distribute(req, res) {
   <p>If you have any questions, please do not hesitate to contact us!</p>
   <p>如有任何问题，欢迎随时联系我们！</p>
 
+  <hr style="width: 400px; border: none; border-top: 3px solid #ccc;" />
+	<div style="text-align: center; padding: 0;">
+	<p><b>For the most recent updates, please follow us in our platforms!</b></p>
+    <a href="https://space.bilibili.com/3546823025232653" target="_blank" style="display: inline-block; margin: 0 10px;">
+    <img src="cid:bilibili" alt="Bilibili" style="width: 32px; height: 32px;" />
+    </a>
+    <a href="https://www.youtube.com/@360Media-e8x" target="_blank" style="display: inline-block; margin: 0 10px;">
+    <img src="cid:youtube" alt="Youtube" style="width: 32px; height: 32px;" />
+    </a>
+    <a href="http://weixin.qq.com/r/mp/pBFRSX-EDCJzrTsq90S2" target="_blank" style="display: inline-block; margin: 0 10px;">
+    <img src="cid:wechat" alt="Wechat" style="width: 32px; height: 32px;" />
+    </a>
+    <a href="https://www.douyin.com/user/478539588" target="_blank" style="display: inline-block; margin: 0 10px;">
+    <img src="cid:tiktok" alt="Tik Tok" style="width: 32px; height: 32px;" />
+    </a>
+	<p><b>关注我们的社媒以获得最新消息!</b></p>
+	</div>
+	<hr style="width: 400px; border: none; border-top: 3px solid #ccc;" />
+
   <br/>
   <p style="margin-top: 20px;">Warm Regards,<br>
     <strong>Roseneath Holiday Park</strong>
@@ -73,6 +92,26 @@ async function rhp_coupon_distribute(req, res) {
             content: imgBuffer,
             encoding: 'base64',
             cid: 'qrcode',
+          },
+          {
+          filename: 'bilibili.png',
+          path: './public/icons/bilibili_appicon.png',
+          cid: 'bilibili',
+          },
+          {
+          filename: 'youtube.png',
+          path: './public/icons/youtube.png',
+          cid: 'youtube',
+          },
+          {
+          filename: 'wechat.png',
+          path: './public/icons/wechat_appicon.png',
+          cid: 'wechat',
+          },
+          {
+          filename: 'tiktok.png',
+          path: './public/icons/tiktok.png',
+          cid: 'tiktok',
           },
         ],
       };
