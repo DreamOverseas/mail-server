@@ -12,7 +12,6 @@ function loadServices(dirPath) {
     const stat = fs.statSync(fullPath);
 
     if (stat.isDirectory()) {
-      // 递归子目录
       Object.assign(services, loadServices(path.join(dirPath, file)));
     } else if (file.endsWith('.js')) {
       const moduleExports = require(fullPath);
