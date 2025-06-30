@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const axios = require('axios');
 const cors = require('cors');
-const QRCode = require('qrcode');
 require('dotenv').config();
 const loadServices = require('./controllers/ServicesController');
 const path = require('path');
