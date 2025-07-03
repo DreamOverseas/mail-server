@@ -4,9 +4,28 @@ const path = require('path');
 const fs = require('fs');
 
 async function Customer_Application_Form_Notification(req, res) {
+
+
+  console.log('收到数据：', req.body);
+
+  
   const {
-    Name, Email, isInAustralia, partnerID, productName, documentId, companyName,
+    surname,
+    firstname,
+    Email,
+    isInAustralia,
+    partnerID,
+    productName,
+    documentId,
+    companyName,
+    address,
+    intakeTime,
+    needAccommodation,
+    needVisaAssist,
+    otherNeeds,
   } = req.body;
+
+  const Name = `${surname || ''}${firstname || ''}`;
 
   if (!Email || !Name) {
     return res.status(400).json({ error: '缺少必要字段' });
@@ -68,6 +87,11 @@ async function Customer_Application_Form_Notification(req, res) {
       brandName: productName || '合作品牌',
       companyName: companyName || '',
       sendDate: todayDate,
+      address,
+      intakeTime,
+      needAccommodation: needAccommodation ? '是' : '否',
+      needVisaAssist: needVisaAssist ? '是' : '否',
+      otherNeeds,
     });
 
     // ✅ 发给客户
