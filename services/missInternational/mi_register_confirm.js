@@ -1,4 +1,4 @@
-const sender_DO = require('../config/transporter').transporter_send_do;
+const sender_DO = require('../../config/transporter').transporter_send_do;
 
 const manager_email = process.env.MANAGER_EMAIL;
 
