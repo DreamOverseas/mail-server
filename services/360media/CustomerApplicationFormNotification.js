@@ -23,6 +23,9 @@ async function Customer_Application_Form_Notification(req, res) {
     needAccommodation,
     needVisaAssist,
     otherNeeds,
+    partnerType,
+    advisorFirstName,
+    advisorLastName,
   } = req.body;
 
   const Name = `${surname || ''}${firstname || ''}`;
@@ -114,7 +117,6 @@ async function Customer_Application_Form_Notification(req, res) {
           <p>公司名称：${companyName || ''}</p>
           <p>PartnerID: ${partnerID}</p>
           <p>客户姓名: ${Name} (${Email})</p>
-          <p>是否在澳洲：${isInAustralia}</p>
           <p style="margin-top:20px; font-size:12px; color:#aaa;">此邮件为系统自动发送</p>
         </div>
       `,
