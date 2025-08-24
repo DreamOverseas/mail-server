@@ -21,7 +21,7 @@ async function whds_biz_notify(req, res){
       </p>
       <p style="margin:0 0 12px 0;">
         If you require further assistance, please contact us at
-        <a href="mailto:john.du@do360.com" style="color:#0b5ed7; text-decoration:none;">john.du@do360.com</a> or call at +61 413 168 533.
+        <a href="mailto:info@do360.com" style="color:#0b5ed7; text-decoration:none;">info@do360.com</a> or call at +61 413 168 533.
       </p>
 
       <hr style="border:none; border-top:1px solid #e5e7eb; margin:20px 0;" />
@@ -32,11 +32,10 @@ async function whds_biz_notify(req, res){
       </p>
       <p style="margin:0 0 12px 0;">
         如有其他事宜，请发送邮件至
-        <a href="mailto:john.du@do360.com" style="color:#0b5ed7; text-decoration:none;">john.du@do360.com</a> 或致电 +61 413 168 533。
+        <a href="mailto:info@do360.com" style="color:#0b5ed7; text-decoration:none;">info@do360.com</a> 或致电 +61 413 168 533。
       </p>
 
       <p style="margin:24px 0 0 0;">Best regards,</p>
-      <p style="margin:0;"><b>John Du</b> | CEO</p>
       <p style="margin:0;">360 Media</p>
       
       <img src="cid:logo_360media" alt="360 Media" style="display:block; width:140px; height:auto; margin:12px 0 20px 0;" />
@@ -92,7 +91,7 @@ async function whds_inf_notify(req, res){
       </p>
       <p style="margin:0 0 12px 0;">
         If you require further assistance, please contact us at
-        <a href="mailto:john.du@do360.com" style="color:#0b5ed7; text-decoration:none;">john.du@do360.com</a> or call at +61 413 168 533.
+        <a href="mailto:info@do360.com" style="color:#0b5ed7; text-decoration:none;">info@do360.com</a> or call at +61 413 168 533.
       </p>
 
       <hr style="border:none; border-top:1px solid #e5e7eb; margin:20px 0;" />
@@ -103,11 +102,10 @@ async function whds_inf_notify(req, res){
       </p>
       <p style="margin:0 0 12px 0;">
         如有其他事宜，请发送邮件至
-        <a href="mailto:john.du@do360.com" style="color:#0b5ed7; text-decoration:none;">john.du@do360.com</a> 或致电 +61 413 168 533。
+        <a href="mailto:info@do360.com" style="color:#0b5ed7; text-decoration:none;">info@do360.com</a> 或致电 +61 413 168 533。
       </p>
 
       <p style="margin:24px 0 0 0;">Best regards,</p>
-      <p style="margin:0;"><b>John Du</b> | CEO</p>
       <p style="margin:0;">360 Media</p>
       
       <img src="cid:logo_360media" alt="360 Media" style="display:block; width:140px; height:auto; margin:12px 0 20px 0;" />
