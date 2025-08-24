@@ -45,7 +45,7 @@ async function Partner_Application_Form_Notification(req, res) {
   };
 
   const baseUrl = process.env.PUBLIC_BASE_URL || 'http://localhost:3002';
-  const logoFileName = logoMap[productName] || '360media.jpg';
+  const logoFileName = logoMap[productName] || '360media.png';
   const logoUrl = `${baseUrl}/public/360media/${logoFileName}`;
   const bilibiliUrl = bilibiliMap[productName] || 'https://space.bilibili.com/3546717257468817';
   const xiaohongshuUrl = xiaohongshuMap[productName] || 'https://www.xiaohongshu.com/user/profile/5fc6e9140000000001008c09';
