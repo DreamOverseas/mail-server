@@ -153,6 +153,12 @@ app.post('/1club/member-notification', servs.one_club_member_notification);
 */
 app.post('/example/email-template', servs.example_email_template);
 
+/**
+ * API notifications for wanghongdasai. biz for merchants, inf for Influencers
+*/
+app.post('/whds-notify/biz', servs.whds_biz_notify);
+app.post('/whds-notify/inf', servs.whds_inf_notify);
+
 // Up n Listen
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

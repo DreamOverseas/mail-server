@@ -59,7 +59,7 @@ async function Customer_Application_Form_Notification(req, res) {
     };
 
     const baseUrl = process.env.PUBLIC_BASE_URL || 'http://localhost:3002';
-    const logoFileName = logoMap[productName] || '360media.jpg';
+    const logoFileName = logoMap[productName] || '360media.png';
     const logoUrl = `${baseUrl}/public/360media/${logoFileName}`;
     const bilibiliIcon = `${baseUrl}/public/icons/bilibili.png`;
     const xiaohongshuIcon = `${baseUrl}/public/icons/red_note.png`;
