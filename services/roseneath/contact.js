@@ -15,16 +15,34 @@ async function rhp_contact(req, res) {
         from: 'Roseneath Park Website <melbourne@do360.com>',
         to: roseneath_cs,
         subject: `Question on '${Subject}' from ${Name}`,
-        text: `Hi there,
+        html: `Hi there,<br><br>
 
-You got a new enquiry from Roseneath Park Website:
-${Question}
+You got a new enquiry from Roseneath Park Website:<br><br>
 
-From: ${Name}
-Email: ${Email}
-Phone Number: ${PhoneNumber || 'Not provided'}
-Company: ${Company || 'Not provided'}`,
-    };
+<b>${Question}</b><br><br>
+
+<p>To reply to this enquiry, please click the button below: </p><br/>
+<a href="mailto:${Email}?subject=${encodeURIComponent('Re: Your Enquiry About ' + Subject)}&body=${encodeURIComponent(
+`Hi, ${Name}:
+
+Thank you for your interest in Roseneath Holiday Park.
+
+
+
+We look forward to hearing from you.
+
+Kind regards,
+Roseneath Holiday Park Management`
+)}" 
+style="display:inline-block; padding:10px 20px; margin-top:10px; background-color:#007BFF; color:#fff; text-decoration:none; border-radius:6px; font-family:Arial, sans-serif;">
+Reply to ${Name}
+</a><br><br>
+
+From: ${Name}<br>
+Email: ${Email}<br>
+Phone Number: ${PhoneNumber || 'Not provided'}<br>
+Company: ${Company || 'Not provided'}
+`,};
 
     // Structure User Email
     const userMailOptions = {
@@ -32,7 +50,8 @@ Company: ${Company || 'Not provided'}`,
         to: Email,
         subject: 'Thank You for Your Interest in Roseneath Holiday Park',
         html: `<p>Dear <strong>${Name}</strong>,</p>
-    <p>Thank you for your inquiry about <strong>Roseneath Holiday Park</strong>. We are delighted to share that there are many exciting developments happening here, and we can't wait for you to experience them.</p>
+    <p>Thank you for your inquiry about <strong>Roseneath Holiday Park</strong>. </p> <br />
+    <p>We are delighted to share that there are many exciting developments happening here, and we can't wait for you to experience them.</p>
     <p>To proceed with your booking and payment, please click the link below:</p>
     <p style="text-align: start;">
         <a href="https://book-directonline.com/properties/roseneathholidaypark-1" style="display: inline-block; padding: 10px 20px; color: #fff; background-color: #007BFF; text-decoration: none; border-radius: 4px;">Book Now!</a>
