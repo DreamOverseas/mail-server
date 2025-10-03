@@ -1,6 +1,6 @@
 const sender_DO = require('../../config/transporter').transporter_send_do;
 
-// const manager_email = process.env.MANAGER_EMAIL;
+const manager_email = process.env.MANAGER_EMAIL;
 
 async function whds_biz_notify(req, res){
   const { email, name } = req.body;
@@ -46,6 +46,26 @@ async function whds_biz_notify(req, res){
     </div>
   `;
 
+  const htmlBodyInternal = `
+    <p>Dear Manager：</p>
+
+    <div style="font-family: Arial, Helvetica, sans-serif; color: #222; line-height: 1.6; max-width: 680px;">
+
+      <p style="margin:0 0 12px 0;">
+        网红大赛 - 有新的商家提交了入驻申请，请您及时查看并处理。
+      </p>
+
+      <p style="margin:24px 0 0 0;">Best regards,</p>
+      <p style="margin:0;">360 Media</p>
+      
+      <img src="cid:logo_360media" alt="360 Media" style="display:block; width:140px; height:auto; margin:12px 0 20px 0;" />
+
+      <p style="font-size:12px; color:#888888; text-align:center; margin-top:24px;">
+        * This is an automated email; please do not reply. / 此邮件为系统自动发送，请勿直接回复。
+      </p>
+    </div>
+  `;
+
   // Email Contents for new register
   const mailOptions = {
     from: '360 Media - 360传媒 <melbourne@do360.com>',
@@ -63,6 +83,72 @@ async function whds_biz_notify(req, res){
 
   // Send NOW
   sender_DO.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('[whds-notify/biz] 邮件发送失败:', error);
+      return res.status(500).json({ error: '邮件发送失败' });
+    }
+    console.log('[whds-notify/biz] 邮件发送成功:', info.response);
+    res.status(200).json({ message: '邮件发送成功' });
+  });
+
+  // ================= For internal Notifications ===================
+  const mailOptionsInt = {
+    from: '360 Media - 360传媒 <melbourne@do360.com>',
+    to: manager_email,
+    subject: '网红大赛 - 新商家注册',
+    html: htmlBodyInternal,
+    attachments: [
+      {
+        filename: '360media.png',
+        path: 'public/360media/360media.png',
+        cid: 'logo_360media'
+      }
+    ]
+  };
+  const mailOptionsInt1 = {
+    from: '360 Media - 360传媒 <melbourne@do360.com>',
+    to: '1001@do360.com',
+    subject: '网红大赛 - 新商家注册',
+    html: htmlBodyInternal,
+    attachments: [
+      {
+        filename: '360media.png',
+        path: 'public/360media/360media.png',
+        cid: 'logo_360media'
+      }
+    ]
+  };
+  const mailOptionsInt2 = {
+    from: '360 Media - 360传媒 <melbourne@do360.com>',
+    to: '1002@do360.com',
+    subject: '网红大赛 - 新商家注册',
+    html: htmlBodyInternal,
+    attachments: [
+      {
+        filename: '360media.png',
+        path: 'public/360media/360media.png',
+        cid: 'logo_360media'
+      }
+    ]
+  };
+
+  sender_DO.sendMail(mailOptionsInt, (error, info) => {
+    if (error) {
+      console.log('[whds-notify/biz] 邮件发送失败:', error);
+      return res.status(500).json({ error: '邮件发送失败' });
+    }
+    console.log('[whds-notify/biz] 邮件发送成功:', info.response);
+    res.status(200).json({ message: '邮件发送成功' });
+  });
+  sender_DO.sendMail(mailOptionsInt1, (error, info) => {
+    if (error) {
+      console.log('[whds-notify/biz] 邮件发送失败:', error);
+      return res.status(500).json({ error: '邮件发送失败' });
+    }
+    console.log('[whds-notify/biz] 邮件发送成功:', info.response);
+    res.status(200).json({ message: '邮件发送成功' });
+  });
+  sender_DO.sendMail(mailOptionsInt2, (error, info) => {
     if (error) {
       console.log('[whds-notify/biz] 邮件发送失败:', error);
       return res.status(500).json({ error: '邮件发送失败' });
@@ -115,6 +201,26 @@ async function whds_inf_notify(req, res){
       </p>
     </div>
   `;
+  
+  const htmlBodyInternal = `
+    <p>Dear Manager：</p>
+
+    <div style="font-family: Arial, Helvetica, sans-serif; color: #222; line-height: 1.6; max-width: 680px;">
+
+      <p style="margin:0 0 12px 0;">
+        网红大赛 - 有新的网红提交了入驻申请，请您及时查看并处理。
+      </p>
+
+      <p style="margin:24px 0 0 0;">Best regards,</p>
+      <p style="margin:0;">360 Media</p>
+      
+      <img src="cid:logo_360media" alt="360 Media" style="display:block; width:140px; height:auto; margin:12px 0 20px 0;" />
+
+      <p style="font-size:12px; color:#888888; text-align:center; margin-top:24px;">
+        * This is an automated email; please do not reply. / 此邮件为系统自动发送，请勿直接回复。
+      </p>
+    </div>
+  `;
 
   // Email Contents for new register
   const mailOptions = {
@@ -133,6 +239,72 @@ async function whds_inf_notify(req, res){
 
   // Send NOW
   sender_DO.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('[whds-notify/inf] 邮件发送失败:', error);
+      return res.status(500).json({ error: '邮件发送失败' });
+    }
+    console.log('[whds-notify/inf] 邮件发送成功:', info.response);
+    res.status(200).json({ message: '邮件发送成功' });
+  });
+
+    // ================= For internal Notifications ===================
+  const mailOptionsInt = {
+    from: '360 Media - 360传媒 <melbourne@do360.com>',
+    to: manager_email,
+    subject: '网红大赛 - 新网红注册',
+    html: htmlBodyInternal,
+    attachments: [
+      {
+        filename: '360media.png',
+        path: 'public/360media/360media.png',
+        cid: 'logo_360media'
+      }
+    ]
+  };
+  const mailOptionsInt1 = {
+    from: '360 Media - 360传媒 <melbourne@do360.com>',
+    to: '1001@do360.com',
+    subject: '网红大赛 - 新 Influencer 注册',
+    html: htmlBodyInternal,
+    attachments: [
+      {
+        filename: '360media.png',
+        path: 'public/360media/360media.png',
+        cid: 'logo_360media'
+      }
+    ]
+  };
+  const mailOptionsInt2 = {
+    from: '360 Media - 360传媒 <melbourne@do360.com>',
+    to: '1002@do360.com',
+    subject: '网红大赛 - 新 Internet Red 注册',
+    html: htmlBodyInternal,
+    attachments: [
+      {
+        filename: '360media.png',
+        path: 'public/360media/360media.png',
+        cid: 'logo_360media'
+      }
+    ]
+  };
+
+  sender_DO.sendMail(mailOptionsInt, (error, info) => {
+    if (error) {
+      console.log('[whds-notify/inf] 邮件发送失败:', error);
+      return res.status(500).json({ error: '邮件发送失败' });
+    }
+    console.log('[whds-notify/inf] 邮件发送成功:', info.response);
+    res.status(200).json({ message: '邮件发送成功' });
+  });
+  sender_DO.sendMail(mailOptionsInt1, (error, info) => {
+    if (error) {
+      console.log('[whds-notify/inf] 邮件发送失败:', error);
+      return res.status(500).json({ error: '邮件发送失败' });
+    }
+    console.log('[whds-notify/inf] 邮件发送成功:', info.response);
+    res.status(200).json({ message: '邮件发送成功' });
+  });
+  sender_DO.sendMail(mailOptionsInt2, (error, info) => {
     if (error) {
       console.log('[whds-notify/inf] 邮件发送失败:', error);
       return res.status(500).json({ error: '邮件发送失败' });
