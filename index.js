@@ -109,6 +109,11 @@ app.post('/roseneathpark/contact', servs.rhp_contact);
 app.post('/roseneathpark/coupon_distribute', servs.rhp_coupon_distribute);
 
 /**
+ * API handling listing all email subscribers with roseneathholidaypark tag from Mailchimp [RHP]
+*/
+app.get('/roseneathpark/subscribers', servs.rhp_list_subscribers);
+
+/**
  * API handling Contact enquiries from 1 club website
 */
 app.post('/1club/enquiry', servs.oneclub_enquiry);
